@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
  import { FormlyMaterialModule } from '@ngx-formly/material';
  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  import {MatButtonModule} from '@angular/material/button';
-
+ import { NgxCsvParserModule } from 'ngx-csv-parser';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgxCsvParserModule,
     FormlyModule.forRoot({
       validationMessages: [
         { name: 'required', message: 'This field is required' },

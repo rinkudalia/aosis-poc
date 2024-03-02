@@ -1,0 +1,3 @@
+Firstname, varchar, fname 
+Lastname, varchar, lname
+Email, varchar, email
