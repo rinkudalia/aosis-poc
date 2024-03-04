@@ -59,23 +59,21 @@ export class AppComponent implements OnInit {
     defineControls():void {
     this.fields = this.csvParsed.map((row: string[]) => {
       let fieldConfig: FormlyFieldConfig = {
-        key: row[2], // Assuming third column as the key
-        props: {
-        }
       };
-  
-      switch (row[1]) {
-        case ' varchar':
+      const rowType = row[1]?.trim();
+      console.log(rowType);
+      switch (rowType) {
+        case 'varchar':
           fieldConfig.type = 'input';
+          fieldConfig.key = row[2];
           fieldConfig.props = {
             label: row[0],
             type: 'text',
-            placeholder: 'Please enter' + fieldConfig.key,
             required: true,
           };
           break;
-        case ' bool':
-          fieldConfig.key = 'gender';
+        case 'bool':
+          fieldConfig.key = row[2];
           fieldConfig.type = 'radio';
           fieldConfig.props =   {
               label: 'Gender',
@@ -86,11 +84,11 @@ export class AppComponent implements OnInit {
               required: true,
           };
           break;
-        case ' checkbox':
+        case 'checkbox':
           fieldConfig.type = 'checkbox';
           break;
-        case ' date':
-          fieldConfig.key = 'Datepicker';
+        case 'date':
+          fieldConfig.key = row[2];
           fieldConfig.type = 'datepicker';
           fieldConfig.props = {
             label: 'Datepicker',
@@ -104,8 +102,7 @@ export class AppComponent implements OnInit {
           break;
         // Add more cases for other data types if needed
         default:
-          fieldConfig.type = 'input'; // Default to input for unknown types
-          break;
+         break;
       }
   
       return fieldConfig;

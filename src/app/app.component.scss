@@ -1,6 +1,6 @@
 :host {
     button {
-        margin: 20px;
+        margin: 5px;
     }
 
     ::ng-deep formly-field, formly-field-mat-datepicker {
@@ -9,8 +9,12 @@
     }
 
     ::ng-deep mat-form-field, formly-field-mat-datepicker {
-        margin: 20px;
+        margin: 5px;
     //    width: 50%;
+    }
+
+    ::ng-deep .mat-mdc-text-field-wrapper {
+        background-color: transparent !important;
     }
 
     ::ng-deep formly-wrapper-mat-form-field {
