@@ -10,6 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
  import {MatButtonModule} from '@angular/material/button';
  import { NgxCsvParserModule } from 'ngx-csv-parser';
  import { HttpClientModule } from '@angular/common/http';
+ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+ import { MatNativeDateModule } from '@angular/material/core';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -27,7 +31,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     }),
     FormlyMaterialModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatNativeDateModule,
+    FormlyMatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

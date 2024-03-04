@@ -3,6 +3,7 @@ import {FormGroup} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { NgxCSVParserError, NgxCsvParser } from 'ngx-csv-parser';
 import {HttpClient} from '@angular/common/http';
+import { take } from 'rxjs';
 
 @Component({  
   selector: 'app-root',
@@ -31,17 +32,18 @@ export class AppComponent implements OnInit {
 
   getCSVData() {
     this.http.get('assets/csvdata.csv', { responseType: 'text' })
-      .subscribe(
-        data => {
-          this.csvData = this.parseCSV(data);
-          console.log(this.csvData);
-          return data;
+      .subscribe({
+        next: (data) =>{
+            this.csvData = this.parseCSV(data);
+            console.log(this.csvData);
+            return data;
         },
-        error => {
-          console.error('Error reading the CSV file.', error);
-          return error;
-        }
-      );
+        error: (e) => {
+          console.error('Error reading the CSV file.', e);
+          return e;
+        },
+        complete: () => console.info('complete') 
+      });
   }
 
   
@@ -50,7 +52,7 @@ export class AppComponent implements OnInit {
   const rows = data.split('\n'); // Split data into rows
   this.csvParsed= rows.map(row => row.split(','));
   this.defineControls();
-  this.changeDetectorRef.detectChanges();
+ //      this.changeDetectorRef.detectChanges();
   return this.csvParsed;
   }
 
@@ -58,26 +60,47 @@ export class AppComponent implements OnInit {
     this.fields = this.csvParsed.map((row: string[]) => {
       let fieldConfig: FormlyFieldConfig = {
         key: row[2], // Assuming third column as the key
-        templateOptions: {
+        props: {
         }
       };
   
       switch (row[1]) {
         case ' varchar':
           fieldConfig.type = 'input';
+          fieldConfig.props = {
+            label: row[0],
+            type: 'text',
+            placeholder: 'Please enter' + fieldConfig.key,
+            required: true,
+          };
           break;
-        case ' radio':
+        case ' bool':
+          fieldConfig.key = 'gender';
           fieldConfig.type = 'radio';
+          fieldConfig.props =   {
+              label: 'Gender',
+              options: [
+                { label: 'Male', value: 'male' },
+                { label: 'Female', value: 'female' },
+              ],
+              required: true,
+          };
           break;
         case ' checkbox':
           fieldConfig.type = 'checkbox';
           break;
         case ' date':
-          fieldConfig.type = 'input';
-          fieldConfig.templateOptions!.type = 'date';
-          fieldConfig.templateOptions!.placeholder = 'YYYY-MM-DD';
-          fieldConfig.templateOptions!.label =row[0];
-          // Add validators if needed
+          fieldConfig.key = 'Datepicker';
+          fieldConfig.type = 'datepicker';
+          fieldConfig.props = {
+            label: 'Datepicker',
+            placeholder: 'mm-dd-yyyy',
+            format:'mm-dd-yyyy',
+            required: true,
+          },
+          fieldConfig.expressions = {
+            'props.min': `formState.limitDate ? ${new Date()} : null`
+          }
           break;
         // Add more cases for other data types if needed
         default:

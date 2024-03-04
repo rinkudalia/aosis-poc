@@ -1,3 +1,4 @@
 Firstname, varchar, fname 
 Lastname, varchar, lname
 Email, date, email
+Gender, bool, gender
