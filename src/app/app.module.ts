@@ -9,11 +9,13 @@ import { ReactiveFormsModule } from '@angular/forms';
  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  import {MatButtonModule} from '@angular/material/button';
  import { NgxCsvParserModule } from 'ngx-csv-parser';
+ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

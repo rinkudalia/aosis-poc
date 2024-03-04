@@ -1,16 +1,15 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, ChangeDetectorRef} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { NgxCSVParserError, NgxCsvParser } from 'ngx-csv-parser';
-import * as csvData  from '../../assets/csvdata.csv';
+import {HttpClient} from '@angular/common/http';
 
 @Component({  
   selector: 'app-root',
   templateUrl: `./app.component.html`,
   styleUrl: `./app.component.scss`
 })
-export class AppComponent {
-  csvData: any[]=[];
+export class AppComponent implements OnInit {
   title(title: any) {
     throw new Error('Method not implemented.');
   }
@@ -21,84 +20,179 @@ export class AppComponent {
   csvRecords: any;
   header: boolean = false;
 
-  constructor(private ngxCsvParser: NgxCsvParser) {
+  constructor(private http: HttpClient, private changeDetectorRef: ChangeDetectorRef) { }
+
+  ngOnInit(): void {
+    this.getCSVData();
+    this.defineControls();
   }
 
-  @ViewChild('fileImportInput') fileImportInput: any;
+  csvData: string[][]= [];
 
-  fileChangeListener($event: any): void {
-    console.log("hello");
-    const files = $event.srcElement.files;
-    this.header = (this.header as unknown as string) === 'true' || this.header === true;
-
-    this.ngxCsvParser.parse(files[0], { header: this.header, delimiter: ',', encoding: 'utf8' })
-      .pipe().subscribe({
-        next: (result): any => {
-          console.log('Result', result);
-          this.csvRecords = result;
-          this.changedataype(this.csvRecords);
-          return this.csvRecords;
+  getCSVData() {
+    this.http.get('assets/csvdata.csv', { responseType: 'text' })
+      .subscribe(
+        data => {
+          this.csvData = this.parseCSV(data);
+          console.log(this.csvData);
+          return data;
         },
-        error: (error: NgxCSVParserError): void => {
-          console.log('Error', error);
+        error => {
+          console.error('Error reading the CSV file.', error);
+          return error;
         }
-      });
+      );
   }
-private changedataype(csvRecords: any): string{
-  csvRecords.forEach((row: any[], rowIndex: number) => {
-    row.forEach((element: any, columnIndex: number) => {
-  csvRecords[rowIndex][columnIndex] = String(element);
+
+  
+  csvParsed: string[][] = [];
+  parseCSV(data: string): string[][] {
+  const rows = data.split('\n'); // Split data into rows
+  this.csvParsed= rows.map(row => row.split(','));
+  this.defineControls();
+  this.changeDetectorRef.detectChanges();
+  return this.csvParsed;
+  }
+
+    defineControls():void {
+    this.fields = this.csvParsed.map((row: string[]) => {
+      let fieldConfig: FormlyFieldConfig = {
+        key: row[2], // Assuming third column as the key
+        templateOptions: {
+        }
+      };
+  
+      switch (row[1]) {
+        case ' varchar':
+          fieldConfig.type = 'input';
+          break;
+        case ' radio':
+          fieldConfig.type = 'radio';
+          break;
+        case ' checkbox':
+          fieldConfig.type = 'checkbox';
+          break;
+        case ' date':
+          fieldConfig.type = 'input';
+          fieldConfig.templateOptions!.type = 'date';
+          fieldConfig.templateOptions!.placeholder = 'YYYY-MM-DD';
+          fieldConfig.templateOptions!.label =row[0];
+          // Add validators if needed
+          break;
+        // Add more cases for other data types if needed
+        default:
+          fieldConfig.type = 'input'; // Default to input for unknown types
+          break;
+      }
+  
+      return fieldConfig;
     });
-  });
+    // this.fields = this.csvParsed.map((row: string[]) => {
+    //   let fieldType = 'input'; // Default type
+    //   switch (row[1]) {
+    //     case ' varchar':
+    //       fieldType = 'input';
+    //       break;
+    //     case ' date':
+    //       fieldType = 'date';
+    //       break;
+    //     case ' checkbox':
+    //       fieldType = 'checkbox';
+    //       break;
+    //     // Add more cases for other data types if needed
+    //     default:
+    //       fieldType = 'input'; // Default to input for unknown types
+    //       break;
+    //   }
+    //   return {
+    //     key: row[2], // Assuming third column as the key
+    //     type: fieldType,
+    //     templateOptions: {
+    //       label: row[0], // First column as label
+    //       required: true,
+    //     }
+    //   };
+    // });
+  }
 
-  csvRecords.forEach((row: any[], rowIndex: number) => {
-     this.key1[rowIndex]= csvRecords[rowIndex][2];
-     this.label1[rowIndex]= csvRecords[rowIndex][0];
-     this.type1[rowIndex]= csvRecords[rowIndex][1];
-    console.log(typeof(csvRecords));
-  });
-  return csvRecords;
-}
+
+//   @ViewChild('fileImportInput') fileImportInput: any;
+
+//   fileChangeListener($event: any): void {
+//     console.log("hello");
+//     const files = $event.srcElement.files;
+//     this.header = (this.header as unknown as string) === 'true' || this.header === true;
+
+//     this.ngxCsvParser.parse(files[0], { header: this.header, delimiter: ',', encoding: 'utf8' })
+//       .pipe().subscribe({
+//         next: (result): any => {
+//           console.log('Result', result);
+//           this.csvRecords = result;
+//           this.changedataype(this.csvRecords);
+//           return this.csvRecords;
+//         },
+//         error: (error: NgxCSVParserError): void => {
+//           console.log('Error', error);
+//         }
+//       });
+//   }
+// private changedataype(csvRecords: any): string{
+//   csvRecords.forEach((row: any[], rowIndex: number) => {
+//     row.forEach((element: any, columnIndex: number) => {
+//   csvRecords[rowIndex][columnIndex] = String(element);
+//     });
+//   });
+
+//   csvRecords.forEach((row: any[], rowIndex: number) => {
+//      this.key1[rowIndex]= csvRecords[rowIndex][2];
+//      this.label1[rowIndex]= csvRecords[rowIndex][0];
+//      this.type1[rowIndex]= csvRecords[rowIndex][1];
+//     console.log(typeof(csvRecords));
+//   });
+//   return csvRecords;
+// }
  
-lparseCsvData(): void {
-  // Convert the CSV string into a two-dimensional array
-  this.csvData = this.csvStringToArray(csvData);
-  console.log('Parsed CSV data:', this.csvData);
-}
+// lparseCsvData(): void {
+//   // Convert the CSV string into a two-dimensional array
+//   this.csvData = this.csvStringToArray(csvData);
+//   console.log('Parsed CSV data:', this.csvData);
+// }
 
-csvStringToArray(csvString: string): any[] {
-  const rows = csvString.split('\n');
-  return rows.map(row => row.split(','));
-}
+// csvStringToArray(csvString: string): any[] {
+//   const rows = csvString.split('\n');
+//   return rows.map(row => row.split(','));
+// }
+
+
 
   form = new FormGroup({});
 
   model = {}; 
   fields: FormlyFieldConfig[] = [
-    {
-      key: 'fname',
-      type: 'input',
-      templateOptions: {
-        label: 'First Name',
-        required: true,
-      }
-    },
-    {
-      key: 'lname',
-      type: 'input',
-      templateOptions: {
-        label: 'Last Name',
-        required: true,
-      }
-    }, 
-    {
-      key: 'email',
-      type: 'input',
-      templateOptions: {
-        label: 'Email',
-        required: true,
-      }
-    }
+    // {
+    //   key: 'fname',
+    //   type: 'input',
+    //   templateOptions: {
+    //     label: 'First Name',
+    //     required: true,
+    //   }
+    // },
+    // {
+    //   key: 'lname',
+    //   type: 'input',
+    //   templateOptions: {
+    //     label: 'Last Name',
+    //     required: true,
+    //   }
+    // }, 
+    // {
+    //   key: 'email',
+    //   type: 'input',
+    //   templateOptions: {
+    //     label: 'Email',
+    //     required: true,
+    //   }
+    // }
   ];
 
   onSubmit(model: any) {
