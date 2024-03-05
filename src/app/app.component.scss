@@ -1,32 +1,72 @@
 :host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  
+    position: relative;
+  
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(45deg, rgba(76, 175, 80, 0.5), rgba(33, 150, 243, 0.5)); /* Adjust gradient colors and opacity */
+    border-radius: 10px;
+      border-radius: 10px;
+    }
+  
+    .container {
+      width: 400px; /* Set the width to create a square shape */
+      border: 2px solid #000;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-wrap: wrap; /* Allow elements to wrap */
+      justify-content: space-between; /* Distribute elements evenly */
+      position: relative; /* Position relative for pseudo-element */
+      z-index: 1; /* Ensure the container stays on top of the pseudo-element */
+    }
+  
+    .form-group {
+      width: calc(50% - 10px); /* Calculate width for two elements with spacing */
+      margin-bottom: 10px; /* Add margin between rows */
+    }
+  
     button {
-        margin: 5px;
+      margin: 5px;
     }
-
-    ::ng-deep formly-field, formly-field-mat-datepicker {
-      //  width: 50%;
-        display: flex;
+  
+    ::ng-deep formly-field,
+    ::ng-deep formly-field-mat-datepicker {
+      width: calc(50% - 10px); /* Calculate width for two elements with spacing */
     }
-
-    ::ng-deep mat-form-field, formly-field-mat-datepicker {
-        margin: 5px;
-    //    width: 50%;
+  
+    ::ng-deep mat-form-field,
+    ::ng-deep formly-field-mat-datepicker {
+      margin: 5px;
     }
-
+  
     ::ng-deep .mat-mdc-text-field-wrapper {
-        background-color: transparent !important;
+      background-color: transparent !important;
     }
-
+  
     ::ng-deep formly-wrapper-mat-form-field {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
+      display: flex;
+      flex-direction: column;
     }
+  
     ::ng-deep .mat-mdc-form-field-infix {
-        margin-top: 5px;
+      margin-top: 5px;
     }
-
+  
     ::ng-deep .mat-mdc-form-field-error {
-        color: red;
+      color: red;
     }
-}
+  }
+  

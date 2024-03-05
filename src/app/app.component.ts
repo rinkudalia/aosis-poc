@@ -121,17 +121,17 @@ export class AppComponent implements OnInit {
           };
           break;
 
-        case 'slider':
-          fieldConfig.type = 'slider';
-          fieldConfig.key = row[2];
-          fieldConfig.props = {
-            label: row[0],
-            min: 0,
-            max: 100,
-            step: 1,
-            required: true,
-          };
-          break;
+        // case 'slider':
+        //   fieldConfig.type = 'slider';
+        //   fieldConfig.key = row[2];
+        //   fieldConfig.props = {
+        //     label: row[0],
+        //     min: 0,
+        //     max: 100,
+        //     step: 1,
+        //     required: true,
+        //   };
+        //   break;
         default:
          break;
       }
