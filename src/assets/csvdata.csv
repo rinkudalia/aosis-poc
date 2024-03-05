@@ -1,4 +1,7 @@
 Firstname, varchar, fname 
 Lastname, varchar, lname
-Email, date, email
+Email, email, email
 Gender, bool, gender
+Laptops, checkbox, laptops
+Date, date, date
+Rate, slider, rate

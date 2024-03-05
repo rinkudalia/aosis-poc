@@ -1,5 +1,5 @@
 import {Component, ViewChild, OnInit, ChangeDetectorRef} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { NgxCSVParserError, NgxCsvParser } from 'ngx-csv-parser';
 import {HttpClient} from '@angular/common/http';
@@ -85,7 +85,17 @@ export class AppComponent implements OnInit {
           };
           break;
         case 'checkbox':
-          fieldConfig.type = 'checkbox';
+          fieldConfig.key= row[2];
+          fieldConfig.type = 'multicheckbox';
+          fieldConfig.props = {
+            label: row[0],
+            options: [
+              { label: 'MacBook M1', value: 'm1'},
+              { label: 'MacBook M2', value: 'm2' },
+              { label: 'MacBook M3', value: 'm3' },
+            ],
+            required: true,
+          };
           break;
         case 'date':
           fieldConfig.key = row[2];
@@ -100,7 +110,28 @@ export class AppComponent implements OnInit {
             'props.min': `formState.limitDate ? ${new Date()} : null`
           }
           break;
-        // Add more cases for other data types if needed
+        case 'email':
+          fieldConfig.key = row[2];
+          fieldConfig.type = 'input';
+          fieldConfig.props = {
+            label: row[0],
+            type: 'email',
+            required: true,
+            validation: [Validators.required, Validators.email],
+          };
+          break;
+
+        case 'slider':
+          fieldConfig.type = 'slider';
+          fieldConfig.key = row[2];
+          fieldConfig.props = {
+            label: row[0],
+            min: 0,
+            max: 100,
+            step: 1,
+            required: true,
+          };
+          break;
         default:
          break;
       }
