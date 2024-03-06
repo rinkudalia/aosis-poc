@@ -15,11 +15,8 @@ export class AppComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  key1: string[]= [];
-  label1: string[] = [];
-  type1: string[] = [];
-  csvRecords: any;
   header: boolean = false;
+  emailValidator = Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
 
   constructor(private http: HttpClient, private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -117,7 +114,9 @@ export class AppComponent implements OnInit {
             label: row[0],
             type: 'email',
             required: true,
-            validation: [Validators.required, Validators.email],
+          };
+          fieldConfig.validators = {
+            validation: [Validators.required, Validators.email, this.emailValidator],
           };
           break;
 

@@ -4,4 +4,3 @@ Email, email, email
 Gender, bool, gender
 Laptops, checkbox, laptops
 Date, date, date
-Rate, slider, rate
