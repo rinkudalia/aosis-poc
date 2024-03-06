@@ -4,6 +4,7 @@ import { FormlyFieldConfig} from '@ngx-formly/core';
 import { NgxCSVParserError, NgxCsvParser } from 'ngx-csv-parser';
 import {HttpClient} from '@angular/common/http';
 import { take } from 'rxjs';
+import { AosisMappingService } from './services/aosis-mapping.service';
 
 @Component({  
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
   header: boolean = false;
   emailValidator = Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
 
-  constructor(private http: HttpClient, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private aosisMappingService: AosisMappingService) { }
 
   ngOnInit(): void {
     this.getCSVData();
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
   csvData: string[][]= [];
 
   getCSVData() {
-    this.http.get('assets/csvdata.csv', { responseType: 'text' })
+    this.aosisMappingService.getMapping()
+    .pipe((take(1)))
       .subscribe({
         next: (data) =>{
             this.csvData = this.parseCSV(data);
@@ -49,7 +51,6 @@ export class AppComponent implements OnInit {
   const rows = data.split('\n'); // Split data into rows
   this.csvParsed= rows.map(row => row.split(','));
   this.defineControls();
- //      this.changeDetectorRef.detectChanges();
   return this.csvParsed;
   }
 
@@ -94,7 +95,7 @@ export class AppComponent implements OnInit {
             required: true,
           };
           break;
-        case 'date':
+        case 'datepicker':
           fieldConfig.key = row[2];
           fieldConfig.type = 'datepicker';
           fieldConfig.props = {
@@ -102,9 +103,9 @@ export class AppComponent implements OnInit {
             placeholder: 'mm-dd-yyyy',
             format:'mm-dd-yyyy',
             required: true,
-          },
-          fieldConfig.expressions = {
-            'props.min': `formState.limitDate ? ${new Date()} : null`
+            datepickerOptions: {
+              min: new Date()
+            },
           }
           break;
         case 'email':

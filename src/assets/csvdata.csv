@@ -1,6 +1,6 @@
-Firstname, varchar, fname 
+Firstname, varchar, fname
 Lastname, varchar, lname
 Email, email, email
 Gender, bool, gender
 Laptops, checkbox, laptops
-Date, date, date
+Date, datepicker, date
