@@ -1,0 +1,46 @@
+{
+    "data": [
+        {
+            "label": "First Name",
+            "type": "varchar",
+            "key": "fname",
+            "value": "John"
+        },
+        {
+            "label": "Last Name",
+            "type": "varchar",
+            "key": "lname",
+            "value": "Doss"
+        },
+        {
+            "label": "Email",
+            "type": "varchar",
+            "key": "email",
+            "value": "John.Doss@abc.com"
+        },
+        {
+            "label": "Weight",
+            "type": "double",
+            "key": "weight",
+            "value": "35"
+        },
+        {
+            "label": "Height",
+            "type": "double",
+            "key": "height",
+            "value": "120"
+        },
+        {
+            "label": "Gender",
+            "type": "varchar",
+            "key": "gender",
+            "value": "F"
+        },
+        {
+            "label": "Date",
+            "type": "date",
+            "key": "date",
+            "value": "2024-03-04"
+        }
+    ]
+}

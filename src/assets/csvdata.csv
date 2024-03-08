@@ -2,4 +2,4 @@ Firstname, varchar, fname, testabc
 Lastname, varchar, lname, testdef
 Email, email, email, testemao
 Gender, bool, gender, F
-Date, date, date
+Date, date, date, 2024-03-04

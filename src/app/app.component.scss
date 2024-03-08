@@ -7,44 +7,36 @@
     width: 100%;
     flex-direction: column;
     ::ng-deep .form-label {
-      font-weight: bolder !important;
+      display: none;
     }
     nav {
       color: white;
-      height: 50px;
+      height: 80px;
       div {
         margin: 0 20px;
       }
     }
     form {
-      width: 40%;
-      padding: 20px;
+      margin-top: 20px; 
+      padding-bottom: 20px; 
+
+      height: calc(100% - 140px);
+      formly-form {
+        height: calc(100% - 10px);
+        overflow: auto;
+        position: relative;
+        display: block;
+        padding: 0px 20px;
+      }
     }
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    border-radius: 10px;
-      border-radius: 10px;
+
+    .footer-container {
+      height: 70px;
+      background: lightgray;
+      padding: 10px 20px;
+      margin-left: -20px;
     }
-  
-    .container {
-      width: 400px;
-      border: 2px solid #000;
-      border-radius: 10px;
-      background-color: #f0f0f0;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between; 
-      position: relative;
-      z-index: 1;
-    }
-  
+
     .form-group {
       width: calc(50% - 10px);
       margin-bottom: 10px;
@@ -54,11 +46,6 @@
       margin: 5px;
     }
   
-    ::ng-deep formly-field,
-    ::ng-deep formly-field-mat-datepicker {
-      width: calc(50% - 10px); 
-    }
-  
     ::ng-deep mat-form-field,
     ::ng-deep formly-field-mat-datepicker {
       margin: 5px;
@@ -66,11 +53,6 @@
   
     ::ng-deep .mat-mdc-text-field-wrapper {
       background-color: transparent !important;
-    }
-  
-    ::ng-deep formly-wrapper-mat-form-field {
-      display: flex;
-      flex-direction: column;
     }
   
     ::ng-deep .mat-mdc-form-field-infix {

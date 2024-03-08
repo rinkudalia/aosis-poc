@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 
 @Component({
- selector: 'formly-field-date-picker',
+ selector: 'formly-field-input',
  template: `
   <div class="col-sm-2 form-element form-group">
     <label class="label" for="field-input-text">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
-    <input type="date" required="true" id="date-form" name="date-form" class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
+    <input name="field-input-text" type="number" required="true" class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
   </div>
  `,
  styles: `
@@ -26,7 +26,7 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
     }
  `,
 })
-export class FormlyFieldDatePicker extends FieldType<FieldTypeConfig> implements OnInit {
+export class FormlyFieldNumeric extends FieldType<FieldTypeConfig> implements OnInit {
     constructor(){
         super();
         
@@ -39,7 +39,6 @@ export class FormlyFieldDatePicker extends FieldType<FieldTypeConfig> implements
     get label() {
         return this.field.props ? this.field.props.label : '';
     }
-
    ngOnInit() {
     console.log(this.field.props?.label);
    }

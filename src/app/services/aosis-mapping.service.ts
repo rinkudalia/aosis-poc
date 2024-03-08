@@ -19,4 +19,15 @@ export class AosisMappingService {
         return throwError(() => error);
       }));
   }
+
+  getMockData() {
+    return this.httpClient.get('assets/mockData.json', { responseType: 'json' })
+     .pipe(
+      map((data: any) => {
+        return data;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      }));
+  }
 }

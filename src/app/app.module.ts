@@ -7,19 +7,21 @@ import { ReactiveFormsModule } from '@angular/forms';
  import { FormlyModule } from '@ngx-formly/core';
  import { NgxCsvParserModule } from 'ngx-csv-parser';
  import { HttpClientModule } from '@angular/common/http';
-import { FormlyFieldInput } from './components/formly-field-input.component';
+import { FormlyFieldText } from './components/formly-field-text.component';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldRadio } from './components/formly-field-radio.component';
 import { FormlyBootstrapMultiCheckboxModule } from '@ngx-formly/bootstrap/multicheckbox';
 import { FormlyFieldDatePicker } from './components/formly-field-date-picker.component';
 import { FormlyBootstrapFormFieldModule } from '@ngx-formly/bootstrap/form-field';
+import { FormlyFieldNumeric } from './components/formly-field-numetic.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormlyFieldInput,
+    FormlyFieldText,
     FormlyFieldRadio,
-    FormlyFieldDatePicker
+    FormlyFieldDatePicker,
+    FormlyFieldNumeric
   ],
   imports: [
     HttpClientModule,
@@ -35,7 +37,8 @@ import { FormlyBootstrapFormFieldModule } from '@ngx-formly/bootstrap/form-field
         { name: 'required', message: 'This field is required' },
       ],
       types: [
-        { name: 'input', component: FormlyFieldInput },
+        { name: 'input', component: FormlyFieldText },
+        { name: 'number', component: FormlyFieldNumeric },
         { name: 'radio', component: FormlyFieldRadio },
         { name: 'date', component: FormlyFieldDatePicker,  wrappers: ['form-field'],
         defaultOptions: {

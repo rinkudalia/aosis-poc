@@ -1,11 +1,8 @@
-import {Component, ViewChild, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
-import { NgxCSVParserError, NgxCsvParser } from 'ngx-csv-parser';
-import {HttpClient} from '@angular/common/http';
 import { take } from 'rxjs';
 import { AosisMappingService } from './services/aosis-mapping.service';
-
 @Component({  
   selector: 'app-root',
   templateUrl: `./app.component.html`,
@@ -25,118 +22,97 @@ export class AppComponent implements OnInit {
   fields: FormlyFieldConfig[] = [];
   csvParsed: string[][] = [];
   csvData: string[][]= [];
-
+  mockData: any;
   constructor(private aosisMappingService: AosisMappingService) { }
 
   ngOnInit(): void {
-    this.getCSVData();
-    this.defineControls();
+    this.loadMockData();
   }
 
-  getCSVData() {
-    this.aosisMappingService.getMapping()
+  loadMockData() {
+    this.aosisMappingService.getMockData()
     .pipe((take(1)))
       .subscribe({
-        next: (data) =>{
-            this.csvData = this.parseCSV(data);
-            console.log(this.csvData);
-            return data;
+        next: (response: any) =>{
+            this.mockData = response.data;
+            console.log(this.mockData);
+            this.defineControls();
+            return response;
         },
         error: (e) => {
-          console.error('Error reading the CSV file.', e);
+          console.error('Error reading the json file.', e);
           return e;
         },
         complete: () => console.info('complete') 
       });
   }
 
-  parseCSV(data: string): string[][] {
-    const rows = data.split('\n'); // Split data into rows
-    this.csvParsed= rows.map(row => row.split(','));
-    this.defineControls();;
-    return this.csvParsed;
-  }
-
   defineControls():void {
-    this.fields = this.csvParsed.map((row: string[]) => {
+    this.fields = this.mockData.map((row: any) => {
       
       let fieldConfig: FormlyFieldConfig = {
       };
-      const rowType = row[1]?.trim();
-      row[2] =  row[2]?.toString().trim();
-      if(row[3]) {
+      // set hooks
+      fieldConfig.hooks = {
+        onInit: (field) => {
+          const { form, model, options, props } = field;
+        },
+      };
+      // setting key
+      fieldConfig.key = row['key'];
+
+      row['key'] =  row['key']?.toString().trim();
+      // set model with default values
+      if(row['value']) {
         this.model = {...this.model,
-          [row[2]]: row[3].toString().trim()
+          [row['key']]: row['value'].toString().trim()
         };
       }
-      console.log(rowType);
+
+      const rowType = row['type']?.trim();
+
       switch (rowType) {
         case 'varchar':
-          fieldConfig.type = 'input';
-          fieldConfig.key = row[2];
-          fieldConfig.hooks = {
-            onInit: (field) => {
-              const { form, model, options, props } = field;
-            },
-          };
-          fieldConfig.props = {
-            label: row[0],
-            type: 'input',  
-            required: true,
-          };
-          break;
-        case 'bool':
-          fieldConfig.key = row[2];
-          fieldConfig.type = 'radio';
-          fieldConfig.hooks = {
-            onInit: (field) => {
-              const { form, model, options, props } = field;
-            },
-          };
-          fieldConfig.props =   {
+          fieldConfig.type = row['key'] === 'gender' ? 'radio' : 'input';
+         
+          /**
+           * TODO: we need to check separate data type for radio button group, right now it is as varchar
+           * so we need to add check for gender specifically
+           */
+          if(row['key'] === 'gender') {
+            fieldConfig.props =   {
               name: 'Gener',
               label: 'Gender',
               options: [{ value: 'Male', key: 'M' }, { value: 'Female', key: 'F' }],
               required: true,
           };
-          break;
-        case 'checkbox':
-          fieldConfig.key= row[2];
-          fieldConfig.type = 'multicheckbox';
-          fieldConfig.props = {
-            label: row[0],
-            options: [
-              { label: 'MacBook M1', value: 'm1'},
-              { label: 'MacBook M2', value: 'm2' },
-              { label: 'MacBook M3', value: 'm3' },
-            ],
-            required: true,
-          };
+          } else {
+            fieldConfig.props = {
+              label: row['label'],
+              type: 'input',  
+              required: true,
+            };
+          }
+        break;
+        case 'bool':
+          // TODO: add for checkbox
           break;
         case 'date':
-          fieldConfig.key = row[2];
           fieldConfig.type = 'date';
-          fieldConfig.hooks = {
-            onInit: (field) => {
-              const { form, model, options, props } = field;
-            },
-          };
           fieldConfig.props = {
-            label: row[0],
+            label: row['label'],
             placeholder: 'yyyy-mm-dd',
             format:'yyyy-mm-dd',
             required: true,
             datepickerOptions: {
-            
              // min: new Date()
             },
           }
           break;
         case 'email':
-          fieldConfig.key = row[2];
           fieldConfig.type = 'input';
           fieldConfig.props = {
-            label: row[0],
+            label: row['label'],
             type: 'email',
             required: true,
           };
@@ -144,53 +120,28 @@ export class AppComponent implements OnInit {
             validation: [Validators.required, Validators.email, this.emailValidator],
           };
           break;
-
-        // case 'slider':
-        //   fieldConfig.type = 'slider';
-        //   fieldConfig.key = row[2];
-        //   fieldConfig.props = {
-        //     label: row[0],
-        //     min: 0,
-        //     max: 100,
-        //     step: 1,
-        //     required: true,
-        //   };
-        //   break;
+        case 'double':
+          fieldConfig.type = 'number';
+          fieldConfig.props = {
+            label: row['label'],
+            type: 'number',
+            required: true,
+          };
+          break;
         default:
          break;
       }
   
       return fieldConfig;
     });
-    // this.fields = this.csvParsed.map((row: string[]) => {
-    //   let fieldType = 'input'; // Default type
-    //   switch (row[1]) {
-    //     case ' varchar':
-    //       fieldType = 'input';
-    //       break;
-    //     case ' date':
-    //       fieldType = 'date';
-    //       break;
-    //     case ' checkbox':
-    //       fieldType = 'checkbox';
-    //       break;
-    //     // Add more cases for other data types if needed
-    //     default:
-    //       fieldType = 'input'; // Default to input for unknown types
-    //       break;
-    //   }
-    //   return {
-    //     key: row[2], // Assuming third column as the key
-    //     type: fieldType,
-    //     templateOptions: {
-    //       label: row[0], // First column as label
-    //       required: true,
-    //     }
-    //   };
-    // });
   }
 
-  onSubmit(model: any) {
-    console.log(model);
+  onSubmit() {
+    console.log(this.model);
+  }
+
+  onCancel() {
+    this.form.reset();
+    this.model = {};
   }
 }
