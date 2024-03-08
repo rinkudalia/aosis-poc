@@ -1,12 +1,12 @@
 :host {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     height: 100vh;
-  
+    padding: 20px;
     position: relative;
   
-    &::before {
+/*     &::before {
       content: '';
       position: absolute;
       top: 0;
@@ -17,9 +17,9 @@
       background: linear-gradient(45deg, rgba(76, 175, 80, 0.5), rgba(33, 150, 243, 0.5)); 
     border-radius: 10px;
       border-radius: 10px;
-    }
+    } */
   
-    .container {
+   /*  .container {
       width: 400px;
       border: 2px solid #000;
       padding: 10px;
@@ -31,14 +31,14 @@
       justify-content: space-between; 
       position: relative;
       z-index: 1;
-    }
-  
+    } */
+ /*  
     .form-group {
       width: calc(50% - 10px);
       margin-bottom: 10px;
-    }
+    } */
   
-    button {
+  /*   button {
       margin: 5px;
     }
   
@@ -67,6 +67,6 @@
   
     ::ng-deep .mat-mdc-form-field-error {
       color: red;
-    }
+    } */
   }
   

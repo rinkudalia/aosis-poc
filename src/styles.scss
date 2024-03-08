@@ -1,8 +1,7 @@
 @use '@angular/material' as mat;
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-
-
-
+@import url(styles/theme.min.css);
+@import url(styles/wet-boew.min.css);
 @include mat.core();
 
 // Define a dark theme

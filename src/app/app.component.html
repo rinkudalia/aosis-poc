@@ -1,14 +1,23 @@
-<!-- <div class="csv-file-chooser-section">
-
-  <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
-    accept=".csv" />
-
-  
-</div> -->
-
-<div class="container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
-  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-  <button mat-raised-button color="primary">Submit</button>
-</form>
+<main>
+<div class="wb-frmvld">
+  <form novalidate [formGroup]="angForm" (ngSubmit)="onSubmit($event, model)">
+    <div class="steps-wrapper">
+        <fieldset>
+        <legend class="wb-steps-active">Client Information</legend>
+            <div class="form-group">
+            <label for="firstname" class="required"><span class="field-name">First name:</span> </label>
+            <input  formControlName="firstname" class="form-control" id="firstname" name="firstname" type="text" data-rule-minlength="2" required="required">
+            </div>
+            <div class="form-group">
+            <label for="lastname" class="required"><span class="field-name">Last name:</span> </label>
+            <input formControlName="lastname" class="form-control" id="lastname" name="lastname" type="text" data-rule-minlength="2" required="required">
+            </div>
+            <div class="buttons form-group">
+              <button class="btn btn-md btn-primary mrgn-bttm-md" type="submit">Next</button>
+          </div>
+        </fieldset>
+    </div>
+  </form>
 </div>
+
+</main>

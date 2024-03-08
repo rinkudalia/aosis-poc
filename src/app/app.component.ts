@@ -1,5 +1,5 @@
-import {Component, ViewChild, OnInit, ChangeDetectorRef} from '@angular/core';
-import {FormGroup, Validators} from '@angular/forms';
+import {Component, ViewChild, OnInit, ChangeDetectorRef, AfterViewInit} from '@angular/core';
+import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { NgxCSVParserError, NgxCsvParser } from 'ngx-csv-parser';
 import {HttpClient} from '@angular/common/http';
@@ -11,7 +11,7 @@ import { AosisMappingService } from './services/aosis-mapping.service';
   templateUrl: `./app.component.html`,
   styleUrl: `./app.component.scss`
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title(title: any) {
     throw new Error('Method not implemented.');
   }
@@ -21,12 +21,25 @@ export class AppComponent implements OnInit {
   type1: string[] = [];
   csvRecords: any;
   header: boolean = false;
+  angForm = new FormGroup({
+    firstname: new FormControl(''),
+    lastname: new FormControl(''),
+ });
+ showForm = false;
+  constructor(private aosisMappingService: AosisMappingService, private fb: FormBuilder) { }
 
-  constructor(private aosisMappingService: AosisMappingService) { }
-
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.showForm = true;
+    }, 100);
+  }
   ngOnInit(): void {
-    this.getCSVData();
-    this.defineControls();
+    this.angForm = this.fb.group({
+        firstname: ['', Validators.required],
+        lastname: ['', Validators.required],
+    });
+  //  this.getCSVData();
+  //  this.defineControls();
   }
 
   csvData: string[][]= [];
@@ -219,7 +232,7 @@ export class AppComponent implements OnInit {
 
   form = new FormGroup({});
 
-  model = {}; 
+  model = {fname: 'test'}; 
   fields: FormlyFieldConfig[] = [
     // {
     //   key: 'fname',
@@ -247,7 +260,13 @@ export class AppComponent implements OnInit {
     // }
   ];
 
-  onSubmit(model: any) {
+  onSubmit(event: Event, model: any) {
+   event.preventDefault();
+    if (this.angForm.invalid) {
+    //  return;
+    }
+
+    console.log(JSON.stringify(this.form.value, null, 2));
     console.log(model);
   }
 }
