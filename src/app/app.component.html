@@ -1,14 +1,9 @@
-<!-- <div class="csv-file-chooser-section">
-
-  <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
-    accept=".csv" />
-
-  
-</div> -->
-
-<div class="container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
-  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-  <button mat-raised-button color="primary">Submit</button>
+<nav class="navbar navbar-dark bg-dark">
+  <div>
+    Project Form
+  </div>
+</nav>
+<form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+  <formly-form [model]="model" [fields]="fields" [form]="form"></formly-form>
+  <button type="submit" class="btn btn-primary submit-button">Submit</button>
 </form>
-</div>

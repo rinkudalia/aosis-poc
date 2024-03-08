@@ -1,6 +1,5 @@
-Firstname, varchar, fname
-Lastname, varchar, lname
-Email, email, email
-Gender, bool, gender
-Laptops, checkbox, laptops
-Date, datepicker, date
+Firstname, varchar, fname, testabc
+Lastname, varchar, lname, testdef
+Email, email, email, testemao
+Gender, bool, gender, F
+Date, date, date

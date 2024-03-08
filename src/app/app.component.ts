@@ -18,6 +18,13 @@ export class AppComponent implements OnInit {
 
   header: boolean = false;
   emailValidator = Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
+  
+  form = new FormGroup({});
+
+  model = {}; 
+  fields: FormlyFieldConfig[] = [];
+  csvParsed: string[][] = [];
+  csvData: string[][]= [];
 
   constructor(private aosisMappingService: AosisMappingService) { }
 
@@ -25,8 +32,6 @@ export class AppComponent implements OnInit {
     this.getCSVData();
     this.defineControls();
   }
-
-  csvData: string[][]= [];
 
   getCSVData() {
     this.aosisMappingService.getMapping()
@@ -45,40 +50,53 @@ export class AppComponent implements OnInit {
       });
   }
 
-  
-  csvParsed: string[][] = [];
   parseCSV(data: string): string[][] {
-  const rows = data.split('\n'); // Split data into rows
-  this.csvParsed= rows.map(row => row.split(','));
-  this.defineControls();
-  return this.csvParsed;
+    const rows = data.split('\n'); // Split data into rows
+    this.csvParsed= rows.map(row => row.split(','));
+    this.defineControls();;
+    return this.csvParsed;
   }
 
-    defineControls():void {
+  defineControls():void {
     this.fields = this.csvParsed.map((row: string[]) => {
+      
       let fieldConfig: FormlyFieldConfig = {
       };
       const rowType = row[1]?.trim();
+      row[2] =  row[2]?.toString().trim();
+      if(row[3]) {
+        this.model = {...this.model,
+          [row[2]]: row[3].toString().trim()
+        };
+      }
       console.log(rowType);
       switch (rowType) {
         case 'varchar':
           fieldConfig.type = 'input';
           fieldConfig.key = row[2];
+          fieldConfig.hooks = {
+            onInit: (field) => {
+              const { form, model, options, props } = field;
+            },
+          };
           fieldConfig.props = {
             label: row[0],
-            type: 'text',
+            type: 'input',  
             required: true,
           };
           break;
         case 'bool':
           fieldConfig.key = row[2];
           fieldConfig.type = 'radio';
+          fieldConfig.hooks = {
+            onInit: (field) => {
+              const { form, model, options, props } = field;
+            },
+          };
           fieldConfig.props =   {
+              name: 'Gener',
               label: 'Gender',
-              options: [
-                { label: 'Male', value: 'male' },
-                { label: 'Female', value: 'female' },
-              ],
+              options: [{ value: 'Male', key: 'M' }, { value: 'Female', key: 'F' }],
               required: true,
           };
           break;
@@ -95,16 +113,22 @@ export class AppComponent implements OnInit {
             required: true,
           };
           break;
-        case 'datepicker':
+        case 'date':
           fieldConfig.key = row[2];
-          fieldConfig.type = 'datepicker';
+          fieldConfig.type = 'date';
+          fieldConfig.hooks = {
+            onInit: (field) => {
+              const { form, model, options, props } = field;
+            },
+          };
           fieldConfig.props = {
-            label: 'Datepicker',
-            placeholder: 'mm-dd-yyyy',
-            format:'mm-dd-yyyy',
+            label: row[0],
+            placeholder: 'yyyy-mm-dd',
+            format:'yyyy-mm-dd',
             required: true,
             datepickerOptions: {
-              min: new Date()
+            
+             // min: new Date()
             },
           }
           break;
@@ -165,86 +189,6 @@ export class AppComponent implements OnInit {
     //   };
     // });
   }
-
-
-//   @ViewChild('fileImportInput') fileImportInput: any;
-
-//   fileChangeListener($event: any): void {
-//     console.log("hello");
-//     const files = $event.srcElement.files;
-//     this.header = (this.header as unknown as string) === 'true' || this.header === true;
-
-//     this.ngxCsvParser.parse(files[0], { header: this.header, delimiter: ',', encoding: 'utf8' })
-//       .pipe().subscribe({
-//         next: (result): any => {
-//           console.log('Result', result);
-//           this.csvRecords = result;
-//           this.changedataype(this.csvRecords);
-//           return this.csvRecords;
-//         },
-//         error: (error: NgxCSVParserError): void => {
-//           console.log('Error', error);
-//         }
-//       });
-//   }
-// private changedataype(csvRecords: any): string{
-//   csvRecords.forEach((row: any[], rowIndex: number) => {
-//     row.forEach((element: any, columnIndex: number) => {
-//   csvRecords[rowIndex][columnIndex] = String(element);
-//     });
-//   });
-
-//   csvRecords.forEach((row: any[], rowIndex: number) => {
-//      this.key1[rowIndex]= csvRecords[rowIndex][2];
-//      this.label1[rowIndex]= csvRecords[rowIndex][0];
-//      this.type1[rowIndex]= csvRecords[rowIndex][1];
-//     console.log(typeof(csvRecords));
-//   });
-//   return csvRecords;
-// }
- 
-// lparseCsvData(): void {
-//   // Convert the CSV string into a two-dimensional array
-//   this.csvData = this.csvStringToArray(csvData);
-//   console.log('Parsed CSV data:', this.csvData);
-// }
-
-// csvStringToArray(csvString: string): any[] {
-//   const rows = csvString.split('\n');
-//   return rows.map(row => row.split(','));
-// }
-
-
-
-  form = new FormGroup({});
-
-  model = {}; 
-  fields: FormlyFieldConfig[] = [
-    // {
-    //   key: 'fname',
-    //   type: 'input',
-    //   templateOptions: {
-    //     label: 'First Name',
-    //     required: true,
-    //   }
-    // },
-    // {
-    //   key: 'lname',
-    //   type: 'input',
-    //   templateOptions: {
-    //     label: 'Last Name',
-    //     required: true,
-    //   }
-    // }, 
-    // {
-    //   key: 'email',
-    //   type: 'input',
-    //   templateOptions: {
-    //     label: 'Email',
-    //     required: true,
-    //   }
-    // }
-  ];
 
   onSubmit(model: any) {
     console.log(model);
