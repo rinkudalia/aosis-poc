@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { AosisApiService} from './services/aosis-apicall.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -46,12 +46,13 @@ import { FormlyFieldNumeric } from './components/formly-field-numetic.component'
             datepickerOptions: {}
           }
         } },
+        {name: 'dropdown', component: FormlyFieldText,  wrappers: ['form-field'],}
       ],
     }),
     FormlyBootstrapMultiCheckboxModule,
     FormlyBootstrapFormFieldModule
   ],
-  providers: [],
+  providers: [AosisApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

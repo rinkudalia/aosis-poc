@@ -3,6 +3,7 @@ import {FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { take } from 'rxjs';
 import { AosisMappingService } from './services/aosis-mapping.service';
+import { AosisApiService } from './services/aosis-apicall.service';
 @Component({  
   selector: 'app-root',
   templateUrl: `./app.component.html`,
@@ -23,10 +24,29 @@ export class AppComponent implements OnInit {
   csvParsed: string[][] = [];
   csvData: string[][]= [];
   mockData: any;
-  constructor(private aosisMappingService: AosisMappingService) { }
+  apidata: any;
+  constructor(private aosisMappingService: AosisMappingService, private aosisApiService: AosisApiService) { }
 
   ngOnInit(): void {
     this.loadMockData();
+    this.loadApiData();
+  }
+
+  loadApiData(){
+    this.aosisApiService.fetchapidata()
+    .pipe((take(1)))
+      .subscribe({
+        next: (data: any) =>{
+            this.apidata = data.data;
+            console.log(this.apidata);
+            return this.apidata;
+        },
+        error: (e) => {
+          console.error('Error reading the api data.', e);
+          return e;
+        },
+        complete: () => console.info('complete') 
+      });
   }
 
   loadMockData() {
@@ -128,6 +148,15 @@ export class AppComponent implements OnInit {
             required: true,
           };
           break;
+        
+        case 'select':
+            fieldConfig.type = 'dropdown';
+            fieldConfig.props = {
+              label: row['label'],
+              options: [{ value: 'Open', key: 'O' }, { value: 'Closed', key: 'C' }],
+              required: true,
+            };
+            break;
         default:
          break;
       }

@@ -3,3 +3,4 @@ Lastname, varchar, lname, testdef
 Email, email, email, testemao
 Gender, bool, gender, F
 Date, date, date, 2024-03-04
+Status, select, status, open
