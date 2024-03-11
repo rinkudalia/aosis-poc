@@ -2,7 +2,7 @@ import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { take } from 'rxjs';
-import { AosisMappingService } from './services/aosis-mapping.service';
+import { AosisMappingService } from '@app/services/aosis-mapping.service';
 @Component({  
   selector: 'app-root',
   templateUrl: `./app.component.html`,
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   
   form = new FormGroup({});
 
-  model = {}; 
+  model: any = {}; 
   fields: FormlyFieldConfig[] = [];
   csvParsed: string[][] = [];
   csvData: string[][]= [];
@@ -137,7 +137,18 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.model);
+    if(this.mockData) {
+      this.mockData.map((row: any) => {
+        if(this.model[row.key]) {
+          row.value = this.model[row.key];
+        }
+        return row;
+      });
+      var a = document.createElement('a');
+      a.setAttribute('href', 'data:json;charset=utf-u,'+encodeURIComponent(JSON.stringify(this.mockData)));
+      a.setAttribute('download', 'output.json');
+      a.click();
+    }
   }
 
   onCancel() {

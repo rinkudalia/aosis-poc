@@ -5,8 +5,8 @@
 </nav>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <formly-form [model]="model" [fields]="fields" [form]="form"></formly-form>
-  <div class="footer-container">
-    <button type="button" class="col-sm-1 btn btn-outline-primary submit-button" (click)="onCancel()">Cancel</button>
-    <button type="submit" class="col-sm-1 btn btn-primary submit-button">Submit</button>
+  <div class="col-md-12 footer-container">
+    <button type="button" class="col-md-1 btn btn-outline-primary submit-button" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="col-md-1 btn btn-primary submit-button">Submit</button>
   </div>
 </form>
