@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     .pipe((take(1)))
       .subscribe({
         next: (data: any) =>{
-            this.apidata = data.data;
+            this.apidata = data;
             console.log(this.apidata);
             return this.apidata;
         },
