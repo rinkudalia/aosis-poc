@@ -4,22 +4,22 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 @Component({
  selector: 'formly-field-radio',
  template: `
- <div *ngIf="fieldOptions" class="col-sm-2 form-element form-group">
- <label class="label" for="field-input-text">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
- <div class="field-options"> 
-    <div *ngFor="let option of fieldOptions" class="option">
-        <input type="radio"  class="border border-primary"
-        required="true" 
-              [name]="option.label"
-              [formControl]="formControl" 
-              [formlyAttributes]="field"
-              [value]="option.key">
-        <span class="radio-label">{{ option.value }}</span>
-      </div>
-  </div>
+ <div *ngIf="fieldOptions" class="col-sm-2 form-element">
+ <fieldset class="chkbxrdio-grp">
+			<legend class="required"><div style="display: flex;"><span class="field-name">{{label}}</span> <strong class="label-required">(required)</strong></div></legend>
+			<div class="form-group radio" *ngFor="let option of fieldOptions; let i = index">
+				<label  [for]="'option' + i"><input type="radio" [name]="option.label" [value]="option.key" [id]="'option' + i" data-rule-required="true" /> {{option.value}}</label>
+			</div>
+		</fieldset>
  </div>
  `,
   styles: `
+  legend {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: bold
+  }
     .field-options {
       display: flex;
       .option {
@@ -52,6 +52,10 @@ export class FormlyFieldRadio extends FieldType<FieldTypeConfig> implements OnIn
   constructor(){
       super();
       
+  }
+
+  get fieldKey(): string {
+    return this.field.key?.toString() ?? 'input';
   }
 
   get isRequired() {

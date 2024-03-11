@@ -37,7 +37,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/wet-boew.min.css",
+              "src/styles/theme.min.css",
+              "src/styles/noscript.min.css"
             ],
             "scripts": []
           },
@@ -97,7 +100,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/wet-boew.min.css",
+              "src/styles/theme.min.css",
+              "src/styles/noscript.min.css"
             ],
             "scripts": []
           }

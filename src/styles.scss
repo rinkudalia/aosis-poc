@@ -1,1 +1,15 @@
 @import 'bootstrap/scss/bootstrap.scss';
+@import url(styles/theme.min.css);
+@import url(styles/wet-boew.min.css);
+html {
+    overflow: hidden;
+}
+
+nav {
+    color: white;
+    height: 80px;
+    div {
+      margin: 0 20px;
+    }
+  }
+  

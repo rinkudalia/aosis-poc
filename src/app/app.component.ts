@@ -1,5 +1,5 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { take } from 'rxjs';
 import { AosisMappingService } from '@app/services/aosis-mapping.service';
@@ -13,17 +13,33 @@ export class AppComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
+  private formHeight: number = 0;
+  get getFormHeight() {
+   return this.formHeight;
+  }
+
+  set getFormHeight(value) {
+    this.formHeight = value;
+  }
   header: boolean = false;
   emailValidator = Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
   
-  form = new FormGroup({});
+  form = new FormGroup({
+    fname: new FormControl(),
+    lname: new FormControl(),
+    email: new FormControl(),
+    weight: new FormControl(),
+    height: new FormControl(),
+    gender: new FormControl()
+  });
 
   model: any = {}; 
   fields: FormlyFieldConfig[] = [];
   csvParsed: string[][] = [];
   csvData: string[][]= [];
   mockData: any;
-  constructor(private aosisMappingService: AosisMappingService) { }
+  constructor(private aosisMappingService: AosisMappingService, private fb: FormBuilder,
+    private changeDetectionRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadMockData();
@@ -37,6 +53,15 @@ export class AppComponent implements OnInit {
             this.mockData = response.data;
             console.log(this.mockData);
             this.defineControls();
+            this.form = this.fb.group({
+              fname: new FormControl('', Validators.required),
+              lname:  new FormControl('', Validators.required),
+              email:  new FormControl('', Validators.required),
+              weight: new FormControl(0, Validators.required),
+              height:new FormControl(0, Validators.required),
+              gender:  new FormControl('', Validators.required),
+            });
+            this.formHeight = window.innerHeight - 140;
             return response;
         },
         error: (e) => {
@@ -48,6 +73,7 @@ export class AppComponent implements OnInit {
   }
 
   defineControls():void {
+
     this.fields = this.mockData.map((row: any) => {
       
       let fieldConfig: FormlyFieldConfig = {
@@ -68,7 +94,6 @@ export class AppComponent implements OnInit {
           [row['key']]: row['value'].toString().trim()
         };
       }
-
       const rowType = row['type']?.trim();
 
       switch (rowType) {
@@ -137,6 +162,16 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.form.invalid){
+      let errorHeight: number = document.getElementById('errors-default')?.clientHeight ?? 0;
+      if(errorHeight) {
+       this.formHeight = (window.innerHeight - errorHeight) - 280;
+      }     
+      
+      this.changeDetectionRef.detectChanges();
+      this.changeDetectionRef.markForCheck();
+      return;
+    } 
     if(this.mockData) {
       this.mockData.map((row: any) => {
         if(this.model[row.key]) {
