@@ -14,6 +14,7 @@ import { FormlyBootstrapMultiCheckboxModule } from '@ngx-formly/bootstrap/multic
 import { FormlyFieldDatePicker } from './components/formly-field-date-picker.component';
 import { FormlyBootstrapFormFieldModule } from '@ngx-formly/bootstrap/form-field';
 import { FormlyFieldNumeric } from './components/formly-field-numetic.component';
+import { WelcomeOasisComponent } from './components/welcome-oasis/welcome-oasis.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { FormlyFieldNumeric } from './components/formly-field-numetic.component'
     FormlyFieldText,
     FormlyFieldRadio,
     FormlyFieldDatePicker,
-    FormlyFieldNumeric
+    FormlyFieldNumeric,
+    WelcomeOasisComponent
+
   ],
   imports: [
     HttpClientModule,

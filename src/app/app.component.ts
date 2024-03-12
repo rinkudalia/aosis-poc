@@ -1,9 +1,12 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {FormGroup, Validators} from '@angular/forms';
-import { FormlyFieldConfig} from '@ngx-formly/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { take } from 'rxjs';
 import { AosisMappingService } from './services/aosis-mapping.service';
 import { AosisApiService } from './services/aosis-apicall.service';
+import { ActivatedRoute } from '@angular/router';
+
+
 @Component({  
   selector: 'app-root',
   templateUrl: `./app.component.html`,
@@ -19,34 +22,15 @@ export class AppComponent implements OnInit {
   
   form = new FormGroup({});
 
-  model = {}; 
+  model: any = {}; 
   fields: FormlyFieldConfig[] = [];
   csvParsed: string[][] = [];
   csvData: string[][]= [];
   mockData: any;
-  apidata: any;
-  constructor(private aosisMappingService: AosisMappingService, private aosisApiService: AosisApiService) { }
+  constructor(private aosisMappingService: AosisMappingService) { }
 
   ngOnInit(): void {
     this.loadMockData();
-    this.loadApiData();
-  }
-
-  loadApiData(){
-    this.aosisApiService.fetchapidata()
-    .pipe((take(1)))
-      .subscribe({
-        next: (data: any) =>{
-            this.apidata = data;
-            console.log(this.apidata);
-            return this.apidata;
-        },
-        error: (e) => {
-          console.error('Error reading the api data.', e);
-          return e;
-        },
-        complete: () => console.info('complete') 
-      });
   }
 
   loadMockData() {
@@ -148,15 +132,6 @@ export class AppComponent implements OnInit {
             required: true,
           };
           break;
-        
-        case 'select':
-            fieldConfig.type = 'dropdown';
-            fieldConfig.props = {
-              label: row['label'],
-              options: [{ value: 'Open', key: 'O' }, { value: 'Closed', key: 'C' }],
-              required: true,
-            };
-            break;
         default:
          break;
       }
@@ -166,7 +141,18 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.model);
+    if(this.mockData) {
+      this.mockData.map((row: any) => {
+        if(this.model[row.key]) {
+          row.value = this.model[row.key];
+        }
+        return row;
+      });
+      var a = document.createElement('a');
+      a.setAttribute('href', 'data:json;charset=utf-u,'+encodeURIComponent(JSON.stringify(this.mockData)));
+      a.setAttribute('download', 'output.json');
+      a.click();
+    }
   }
 
   onCancel() {
