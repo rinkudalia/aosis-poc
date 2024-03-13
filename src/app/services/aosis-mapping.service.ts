@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, throwError } from 'rxjs';
 
@@ -29,5 +29,18 @@ export class AosisMappingService {
       catchError((error: HttpErrorResponse) => {
         return throwError(() => error);
       }));
+  }
+
+  public getWelcomePage() {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this.httpClient.get('/oasis/poc1/hello-oasis',  { headers, responseType: 'text'})
+    .pipe(
+     map((data: any) => {
+       return data;
+     }),
+     catchError((error: HttpErrorResponse) => {
+       return throwError(() => error);
+     }));
   }
 }

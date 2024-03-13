@@ -13,6 +13,7 @@ import { FormlyFieldDatePicker } from 'app/components/formly-field-date-picker.c
 import { FormlyBootstrapFormFieldModule } from '@ngx-formly/bootstrap/form-field';
 import { FormlyFieldNumeric } from 'app/components/formly-field-numetic.component';
 import { DynamicFormComponent } from 'app/components/dynamic-form/dynamic-form.component';
+import { WelcomePageComponent } from 'app/components/welcom-page/welcome-page.component';
 
 export function minLengthValidationMessage(error: any, field: FormlyFieldConfig) {
   return `Should have atleast ${field.props?.minLength} characters`;
@@ -25,7 +26,8 @@ export function minLengthValidationMessage(error: any, field: FormlyFieldConfig)
     FormlyFieldRadio,
     FormlyFieldDatePicker,
     FormlyFieldNumeric,
-    DynamicFormComponent
+    DynamicFormComponent,
+    WelcomePageComponent
   ],
   imports: [
     HttpClientModule,

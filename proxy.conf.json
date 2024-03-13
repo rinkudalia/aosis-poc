@@ -1,0 +1,12 @@
+{
+    "/api/read/json": {
+      "target": "https://puppygifs.tumblr.com",
+      "secure": false,
+      "changeOrigin": true
+    },
+    "/oasis/poc1/hello-oasis": {
+      "target": "https://poc1bidirectional.mangobeach-80aea9ed.eastus.azurecontainerapps.io",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
