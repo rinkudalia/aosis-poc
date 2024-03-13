@@ -12,7 +12,9 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
               [name]="option.label"
               [formControl]="formControl" 
               [formlyAttributes]="field"
-              [value]="option.key">
+              [value]="option.key"
+              [checked]="field.defaultValue"
+              [id]="option.key">
         <span class="radio-label">{{ option.value }}</span>
       </div>
   </div>
@@ -65,6 +67,5 @@ export class FormlyFieldRadio extends FieldType<FieldTypeConfig> implements OnIn
     return this.field.props.options ?? [];
   }
  ngOnInit() {
-  console.log(this.field.props?.label);
  }
 }

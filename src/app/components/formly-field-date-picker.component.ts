@@ -41,6 +41,5 @@ export class FormlyFieldDatePicker extends FieldType<FieldTypeConfig> implements
     }
 
    ngOnInit() {
-    console.log(this.field.props?.label);
    }
 }

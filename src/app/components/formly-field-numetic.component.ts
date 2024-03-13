@@ -40,6 +40,5 @@ export class FormlyFieldNumeric extends FieldType<FieldTypeConfig> implements On
         return this.field.props ? this.field.props.label : '';
     }
    ngOnInit() {
-    console.log(this.field.props?.label);
    }
 }

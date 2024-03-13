@@ -40,6 +40,5 @@ export class FormlyFieldText extends FieldType<FieldTypeConfig> implements OnIni
     }
 
     ngOnInit() {
-        console.log(this.field.props?.label);
     }
 }

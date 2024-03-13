@@ -27,7 +27,6 @@ export class DynamicFormComponent implements OnInit {
       .subscribe({
         next: (response: any) =>{
             this.mockData = response.data;
-            console.log(this.mockData);
             this.defineControls();
             return response;
         },
@@ -50,16 +49,12 @@ export class DynamicFormComponent implements OnInit {
           const { form, model, options, props } = field;
         },
       };
-      // setting key
-      fieldConfig.key = row['key'];
 
       row['key'] =  row['key']?.toString().trim();
-      // set model with default values
-      if(row['value']) {
-        this.model = {...this.model,
-          [row['key']]: row['value'].toString().trim()
-        };
-      }
+      // setting key
+      fieldConfig.key = row['key'];
+      // setting default value
+      fieldConfig.defaultValue = row['value'].toString().trim();  
 
       const rowType = row['type']?.trim();
 
@@ -134,6 +129,7 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit() {
     if(this.form.invalid) return;
+    console.log(this.model);
     if(this.mockData) {
       this.mockData.map((row: any) => {
         if(this.model[row.key]) {

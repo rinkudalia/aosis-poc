@@ -35,7 +35,7 @@
             "key": "weight",
             "value": "35",
             "validation": {
-                "required": true
+                "required": false
             }
         },
         {
@@ -51,7 +51,7 @@
             "label": "Gender",
             "type": "varchar",
             "key": "gender",
-            "value": "",
+            "value": "F",
             "validation": {
                 "required": true
             }
