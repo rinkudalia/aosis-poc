@@ -51,12 +51,15 @@ export class DynamicFormComponent implements OnInit {
       };
 
       row['key'] =  row['key']?.toString().trim();
+      row['type'] = row['type']?.toString().trim();
+      row['value'] = row['value']?.toString().trim(); 
+      
       // setting key
       fieldConfig.key = row['key'];
       // setting default value
-      fieldConfig.defaultValue = row['value'].toString().trim();  
+      fieldConfig.defaultValue = row['value'];
 
-      const rowType = row['type']?.trim();
+      const rowType = row['type'];
 
       switch (rowType) {
         case 'varchar':
