@@ -5,11 +5,10 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
  selector: 'formly-field-radio',
  template: `
  <div *ngIf="fieldOptions" class="col-sm-2 form-element form-group">
- <label class="label" for="field-input-text">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
+ <label class="label" [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
  <div class="field-options"> 
     <div *ngFor="let option of fieldOptions" class="option">
-        <input type="radio"  class="border border-primary"
-        required="true" 
+        <input type="radio" class="border border-primary"
               [name]="option.label"
               [formControl]="formControl" 
               [formlyAttributes]="field"

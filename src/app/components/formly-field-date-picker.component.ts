@@ -5,8 +5,8 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
  selector: 'formly-field-date-picker',
  template: `
   <div class="col-sm-2 form-element form-group">
-    <label class="label" for="field-input-text">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
-    <input type="date" required="true" id="date-form" name="date-form" class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
+    <label class="label"  [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
+    <input [type]="field.props.type" [name]="field.key" class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
   </div>
  `,
  styles: `

@@ -5,8 +5,8 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
  selector: 'formly-field-input',
  template: `
   <div class="col-sm-2 form-element form-group">
-    <label class="label" for="field-input-text">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
-    <input name="field-input-text" type="text" required="true" class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
+    <label class="label" [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
+    <input [name]="field.key" [type]="field.props.type"  class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
   </div>
  `,
  styles: `
@@ -28,18 +28,18 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 })
 export class FormlyFieldText extends FieldType<FieldTypeConfig> implements OnInit {
     constructor(){
-        super();
-        
+        super(); 
     }
 
-    get isRequired() {
-        return this.field.props ? this.field.props.required : false;
+    get isRequired(): boolean {
+        return this.field.props.required ?? false;
     }
 
     get label() {
         return this.field.props ? this.field.props.label : '';
     }
-   ngOnInit() {
-    console.log(this.field.props?.label);
-   }
+
+    ngOnInit() {
+        console.log(this.field.props?.label);
+    }
 }

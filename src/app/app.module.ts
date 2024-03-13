@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
- import { FormlyModule } from '@ngx-formly/core';
- import { NgxCsvParserModule } from 'ngx-csv-parser';
- import { HttpClientModule } from '@angular/common/http';
-import { FormlyFieldText } from './components/formly-field-text.component';
+import { AppRoutingModule } from 'app/app-routing.module';
+import { AppComponent } from 'app/app.component';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormlyFieldText } from 'app/components/formly-field-text.component';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-import { FormlyFieldRadio } from './components/formly-field-radio.component';
+import { FormlyFieldRadio } from 'app/components/formly-field-radio.component';
 import { FormlyBootstrapMultiCheckboxModule } from '@ngx-formly/bootstrap/multicheckbox';
-import { FormlyFieldDatePicker } from './components/formly-field-date-picker.component';
+import { FormlyFieldDatePicker } from 'app/components/formly-field-date-picker.component';
 import { FormlyBootstrapFormFieldModule } from '@ngx-formly/bootstrap/form-field';
-import { FormlyFieldNumeric } from './components/formly-field-numetic.component';
+import { FormlyFieldNumeric } from 'app/components/formly-field-numetic.component';
+import { DynamicFormComponent } from 'app/components/dynamic-form/dynamic-form.component';
+
+export function minLengthValidationMessage(error: any, field: FormlyFieldConfig) {
+  return `Should have atleast ${field.props?.minLength} characters`;
+}
 
 @NgModule({
   declarations: [
@@ -21,20 +24,21 @@ import { FormlyFieldNumeric } from './components/formly-field-numetic.component'
     FormlyFieldText,
     FormlyFieldRadio,
     FormlyFieldDatePicker,
-    FormlyFieldNumeric
+    FormlyFieldNumeric,
+    DynamicFormComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxCsvParserModule,
     BrowserModule,
     ReactiveFormsModule,
     FormlyBootstrapModule,
     FormlyModule.forRoot({
       validationMessages: [
         { name: 'required', message: 'This field is required' },
+        { name: 'minLength', message: minLengthValidationMessage }
       ],
       types: [
         { name: 'input', component: FormlyFieldText },

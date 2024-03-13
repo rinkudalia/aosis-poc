@@ -1,1 +1,4 @@
 @import 'bootstrap/scss/bootstrap.scss';
+.ng-invalid {
+    border-color: red !important;
+}
