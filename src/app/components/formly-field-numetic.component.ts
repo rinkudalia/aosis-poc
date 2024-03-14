@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 
 @Component({
- selector: 'formly-field-input',
+ selector: 'formly-field-numeric',
  template: `
   <div class="col-sm-2 form-element form-group">
     <label class="label"  [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
