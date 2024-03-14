@@ -1,0 +1,22 @@
+:host {
+    overflow: hidden;
+    .action-panel {
+        display: flex;
+        padding: 5px;
+        button {
+            width: 120px;
+            margin-right: 5px;
+        }
+    }
+
+    .welcome-message, .token-message {
+        padding: 5px;
+        span {
+            font-weight: bolder;
+        }
+    }
+
+    .token-message {
+        overflow-wrap: break-word;
+    }
+}

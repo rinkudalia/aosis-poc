@@ -43,4 +43,30 @@ export class AosisMappingService {
        return throwError(() => error);
      }));
   }
+
+  public getToken() {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this.httpClient.get('/oasis/poc1/getTokenAPI',  { headers, responseType: 'json'})
+    .pipe(
+     map((data: any) => {
+       return data;
+     }),
+     catchError((error: HttpErrorResponse) => {
+       return throwError(() => error);
+     }));
+  }
+
+  public getQueryAllWell() {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this.httpClient.get('/oasis/poc1/getQueryAllWells',  { headers, responseType: 'json'})
+    .pipe(
+     map((data: any) => {
+       return data;
+     }),
+     catchError((error: HttpErrorResponse) => {
+       return throwError(() => error);
+     }));
+  }
 }

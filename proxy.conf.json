@@ -1,6 +1,6 @@
 {
-    "/oasis/poc1/hello-oasis": {
-      "target": "https://poc1bidirectional.mangobeach-80aea9ed.eastus.azurecontainerapps.io",
+    "/oasis/poc1/*": {
+      "target": "https://oasis-poc1-bidirectional-poc1.azuremicroservices.io",
       "secure": false,
       "changeOrigin": true
     }

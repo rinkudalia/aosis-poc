@@ -1,1 +1,7 @@
-{{welcomeMessage}}
+
+<div class="action-panel">
+    <button class="btn btn-primary" (click)="getToken()">Get Token</button>
+    <button class="btn btn-primary" (click)="getQueryAllWell()">Get QueryAll</button>
+</div>
+<div class="welcome-message" *ngIf="welcomeMessage"><span>Welcom Message:</span> {{welcomeMessage}}</div>
+<div class="token-message" *ngIf="tokenMessage?.token"><span>Token:</span> {{tokenMessage.token}}</div>
