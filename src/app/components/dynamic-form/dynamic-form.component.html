@@ -3,5 +3,22 @@
     <div class="col-md-12 footer-container">
       <button type="button" class="col-md-1 btn btn-outline-primary submit-button" (click)="onCancel()">Cancel</button>
       <button type="submit" class="col-md-1 btn btn-primary submit-button">Submit</button>
+      <button type="button" class="col-md-1 btn btn-primary submit-button" (click)="callApi()">Call Api</button>
+      <button type="button" class="col-md-1 btn btn-primary submit-button" (click)="showData()">Show Data</button>
     </div>
   </form>
+
+  <div *ngIf="jsonData">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let field of jsonData.layers[0].fields">{{ field.name }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let feature of jsonData.layers[0].features">
+          <td *ngFor="let field of jsonData.layers[0].fields">{{ feature.attributes[field.name] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

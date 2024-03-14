@@ -3,6 +3,9 @@ import {FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { take } from 'rxjs';
 import { AosisMappingService } from '@app/services/aosis-mapping.service';
+import {DisplayDataGridComponent} from '@app/components/display-data-grid/display-data.component';
+import { Route, Router } from '@angular/router';
+import { AosisDataMappingService } from '@app/services/aosis-data-mapping.service';
 @Component({  
   selector: 'dynamic-form',
   templateUrl: `./dynamic-form.component.html`,
@@ -15,10 +18,11 @@ export class DynamicFormComponent implements OnInit {
   mockData: any;
   emailPattern = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}';
 
-  constructor(private aosisMappingService: AosisMappingService) { }
+  constructor(private aosisMappingService: AosisMappingService, private router: Router, private aosisDataMappingService: AosisDataMappingService) { }
 
   ngOnInit(): void {
     this.loadMockData();
+    this.loadJsonData();
   }
 
   loadMockData() {
@@ -150,5 +154,32 @@ export class DynamicFormComponent implements OnInit {
   onCancel() {
     this.form.reset();
     this.model = {};
+  }
+
+  showData(){
+    this.router.navigate(['/displaydata']);
+  }
+
+  callApi(){
+    this.router.navigate(['/welcome']);
+  }
+
+  jsonData: any;
+
+  loadJsonData() {
+    this.aosisDataMappingService.getMockData()
+    .pipe((take(1)))
+      .subscribe({
+        next: (response: any) =>{
+            this.jsonData = response.data;
+            console.log(this.jsonData);
+            return this.jsonData;
+        },
+        error: (e) => {
+          console.error('Error reading the json file.', e);
+          return e;
+        },
+        complete: () => console.info('complete') 
+      });
   }
 }
