@@ -9,7 +9,7 @@ app.use(cors());
 
 app.get('/api/data', async (req, res) => {
   try {
-    const response = await axios.get('http://ec2-18-189-30-226.us-east-2.compute.amazonaws.com:8080/OASIS/POC1');
+    const response = await axios.get('https://poc1bidirectional.mangobeach-80aea9ed.eastus.azurecontainerapps.io/oasis/poc1/hello-oasis');
     res.json(response.data);
   } catch (error) {
     console.error('Error fetching data:', error);

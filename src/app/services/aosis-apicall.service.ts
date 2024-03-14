@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
 
@@ -10,9 +10,11 @@ export class AosisApiService {
   constructor(private httpClient: HttpClient) { }
 
   fetchapidata(): Observable<any> {
-    return this.httpClient.get('http://localhost:3000/api/data ', { responseType: 'json' })
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+    return this.httpClient.get('/oasis/poc1/hello-oasis', {headers, responseType: 'text' })
      .pipe(
       map((data: any) => {
+        console.log(data);
         return data;
       }),
       catchError((error: HttpErrorResponse) => {
@@ -21,4 +23,4 @@ export class AosisApiService {
   }
 
   
-}
+}   

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AosisApiService } from '../../services/aosis-apicall.service';
 import { take } from 'rxjs';
 
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-welcome-oasis',
   templateUrl: './welcome-oasis.component.html',
@@ -12,9 +14,9 @@ export class WelcomeOasisComponent implements OnInit {
   data: any;
     apidata: any;
 
-  constructor(private http: HttpClient, private aosisApiService: AosisApiService) { }
+  constructor(private http: HttpClient, private aosisApiService: AosisApiService, private route: ActivatedRoute) { }
     ngOnInit(): void {
-        this.getapiData();
+      this.getapiData();
     }
 
   getapiData(): void {

@@ -27,12 +27,28 @@ export class AppComponent implements OnInit {
   csvParsed: string[][] = [];
   csvData: string[][]= [];
   mockData: any;
-  constructor(private aosisMappingService: AosisMappingService) { }
+  constructor(private aosisMappingService: AosisMappingService, private aosisApiService: AosisApiService) { }
 
   ngOnInit(): void {
     this.loadMockData();
   }
 
+  apidata: any;
+  getapiData(): void {
+    this.aosisApiService.fetchapidata()
+      .pipe(take(1))
+      .subscribe({
+        next: (data: any) => {
+          this.apidata = data;
+          console.log(this.apidata);
+          return this.apidata;
+        },
+        error: (e: any) => {
+          console.error('Error reading the api data.', e);
+        },
+        complete: () => console.info('complete')
+      });
+  }
   loadMockData() {
     this.aosisMappingService.getMockData()
     .pipe((take(1)))
