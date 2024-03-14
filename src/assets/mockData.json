@@ -2,8 +2,8 @@
     "data": [
         {
             "label": "First Name",
-            "type": "varchar",
-            "key": "fname",
+            "controlType": "varchar",
+            "attribute": "fname",
             "value": "John",
             "tooltip": "Dynamic Form First Name",
             "validation": {
@@ -13,8 +13,8 @@
         },
         {
             "label": "Last Name",
-            "type": "varchar",
-            "key": "lname",
+            "controlType": "varchar",
+            "attribute": "lname",
             "value": "Doss",
             "tooltip": "Dynamic Form Last Name",
             "validation": {
@@ -24,8 +24,8 @@
         },
         {
             "label": "Email",
-            "type": "varchar",
-            "key": "email",
+            "controlType": "varchar",
+            "attribute": "email",
             "value": "John.Doss@abc.com",
             "tooltip": "Dynamic Form Email",
             "validation": {
@@ -34,8 +34,8 @@
         },
         {
             "label": "Weight",
-            "type": "double",
-            "key": "weight",
+            "controlType": "double",
+            "attribute": "weight",
             "value": "35",
             "tooltip": "Dynamic Form Weight",
             "validation": {
@@ -44,8 +44,8 @@
         },
         {
             "label": "Height",
-            "type": "double",
-            "key": "height",
+            "controlType": "double",
+            "attribute": "height",
             "value": "120",
             "tooltip": "Dynamic Form Height",
             "validation": {
@@ -54,8 +54,8 @@
         },
         {
             "label": "Gender",
-            "type": "varchar",
-            "key": "gender",
+            "controlType": "varchar",
+            "attribute": "gender",
             "tooltip": "Dynamic Form Gender",
             "value": "F",
             "validation": {
@@ -64,8 +64,8 @@
         },
         {
             "label": "Date",
-            "type": "date",
-            "key": "date",
+            "controlType": "date",
+            "attribute": "date",
             "tooltip": "Dynamic Form Date",
             "value": "2024-03-04",
             "validation": {

@@ -50,27 +50,27 @@ export class DynamicFormComponent implements OnInit {
         },
       };
 
-      row['key'] =  row['key']?.toString().trim();
-      row['type'] = row['type']?.toString().trim();
+      row['attribute'] =  row['attribute']?.toString().trim();
+      row['controlType'] = row['controlType']?.toString().trim();
       row['value'] = row['value']?.toString().trim(); 
 
       // setting key
-      fieldConfig.key = row['key'];
+      fieldConfig.key = row['attribute'];
       // setting default value
       fieldConfig.defaultValue = row['value'];
       
-      const rowType = row['type'];
+      const rowType = row['controlType'];
 
       switch (rowType) {
         case 'varchar':
-          fieldConfig.type = row['key'] === 'gender' ? 'radio' : 'input';
-          fieldConfig.key = row['key'];
+          fieldConfig.type = row['attribute'] === 'gender' ? 'radio' : 'input';
+          fieldConfig.key = row['attribute'];
           
           /**
            * TODO: we need to check separate data type for radio button group, right now it is as varchar
            * so we need to add check for gender specifically
            */
-          if(row['key'] === 'gender') {
+          if(row['attribute'] === 'gender') {
             fieldConfig.props =   {
               name: 'Gener',
               label: 'Gender',
@@ -81,7 +81,7 @@ export class DynamicFormComponent implements OnInit {
               options: [{ value: 'Male', key: 'M' }, { value: 'Female', key: 'F' }],
               required: row['validation']?.required
             };
-          } else  if(row['key'] === 'email') {
+          } else  if(row['attribute'] === 'email') {
             fieldConfig.props =   {
               label: row['label'],
               type: 'email',  
@@ -150,14 +150,16 @@ export class DynamicFormComponent implements OnInit {
     if(this.form.invalid) return;
     console.log(this.model);
     if(this.mockData) {
-      this.mockData.map((row: any) => {
+      const outputData = this.mockData.map((row: any) => {
         if(this.model[row.key]) {
           row.value = this.model[row.key];
         }
+        row.timestamp = new Date();
+        delete row['validation'];
         return row;
       });
       var a = document.createElement('a');
-      a.setAttribute('href', 'data:json;charset=utf-u,'+encodeURIComponent(JSON.stringify(this.mockData)));
+      a.setAttribute('href', 'data:json;charset=utf-u,'+encodeURIComponent(JSON.stringify(outputData)));
       a.setAttribute('download', 'output.json');
       a.click();
     }
