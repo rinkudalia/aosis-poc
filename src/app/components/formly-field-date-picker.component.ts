@@ -5,8 +5,8 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
  selector: 'formly-field-date-picker',
  template: `
   <div class="col-sm-2 form-element form-group">
-    <label class="label"  [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
-    <input [type]="field.props.type" [name]="field.key" class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
+    <label class="label" [title]="tooltip"  [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
+    <input [type]="field.props.type" [title]="tooltip" [title]="label" [name]="field.key" class="border border-primary form-control" [formControl]="formControl" [formlyAttributes]="field">
   </div>
  `,
  styles: `
@@ -32,6 +32,10 @@ export class FormlyFieldDatePicker extends FieldType<FieldTypeConfig> implements
         
     }
 
+    get tooltip(): string {
+        return this.field.props['tooltip']?.content ?? this.label;
+    }
+    
     get isRequired() {
         return this.field.props ? this.field.props.required : false;
     }

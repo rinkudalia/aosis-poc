@@ -53,18 +53,19 @@ export class DynamicFormComponent implements OnInit {
       row['key'] =  row['key']?.toString().trim();
       row['type'] = row['type']?.toString().trim();
       row['value'] = row['value']?.toString().trim(); 
-      
+
       // setting key
       fieldConfig.key = row['key'];
       // setting default value
       fieldConfig.defaultValue = row['value'];
-
+      
       const rowType = row['type'];
 
       switch (rowType) {
         case 'varchar':
           fieldConfig.type = row['key'] === 'gender' ? 'radio' : 'input';
           fieldConfig.key = row['key'];
+          
           /**
            * TODO: we need to check separate data type for radio button group, right now it is as varchar
            * so we need to add check for gender specifically
@@ -73,7 +74,10 @@ export class DynamicFormComponent implements OnInit {
             fieldConfig.props =   {
               name: 'Gener',
               label: 'Gender',
-              type: 'radio',  
+              type: 'radio',
+              tooltip: {
+                content: row['tooltip']
+              },  
               options: [{ value: 'Male', key: 'M' }, { value: 'Female', key: 'F' }],
               required: row['validation']?.required
             };
@@ -81,6 +85,9 @@ export class DynamicFormComponent implements OnInit {
             fieldConfig.props =   {
               label: row['label'],
               type: 'email',  
+              tooltip: {
+                content: row['tooltip']
+              },
               required: row['validation']?.required,
               pattern: this.emailPattern
             };
@@ -93,6 +100,9 @@ export class DynamicFormComponent implements OnInit {
             fieldConfig.props = {
               label: row['label'],
               type: 'input',  
+              tooltip: {
+                content: row['tooltip']
+              },
               required: row['validation']?.required,
               minLength: row['validation']?.minLength
             };
@@ -108,6 +118,9 @@ export class DynamicFormComponent implements OnInit {
             type: 'date',
             placeholder: 'yyyy-mm-dd',
             format:'yyyy-mm-dd',
+            tooltip: {
+                content: row['tooltip']
+              },
             required: row['validation']?.required,
             datepickerOptions: {
              // min: new Date()
@@ -119,6 +132,9 @@ export class DynamicFormComponent implements OnInit {
           fieldConfig.props = {
             label: row['label'],
             type: 'number',
+            tooltip: {
+                content: row['tooltip']
+              },
             required: row['validation']?.required
           };
           break;
