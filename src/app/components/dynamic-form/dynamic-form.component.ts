@@ -155,6 +155,7 @@ export class DynamicFormComponent implements OnInit {
           row.value = this.model[row.key];
         }
         row.timestamp = new Date();
+        delete row['tooltip'];
         delete row['validation'];
         return row;
       });

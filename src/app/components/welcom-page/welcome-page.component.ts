@@ -61,6 +61,7 @@ export class WelcomePageComponent implements OnInit {
     .pipe((take(1)))
       .subscribe({
         next: (response: any) =>{
+            console.log(response.layers[0].fields);
             console.log(response);
             return response;
         },
