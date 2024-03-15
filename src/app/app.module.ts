@@ -15,7 +15,6 @@ import { FormlyFieldNumeric } from 'app/components/formly-field-numetic.componen
 import { DynamicFormComponent } from 'app/components/dynamic-form/dynamic-form.component';
 import { WelcomePageComponent } from 'app/components/welcom-page/welcome-page.component';
 import { DisplayDataGridComponent } from './components/display-data-grid/display-data.component';
-import { MatTableModule } from '@angular/material/table';
 
 export function minLengthValidationMessage(error: any, field: FormlyFieldConfig) {
   return `Should have atleast ${field.props?.minLength} characters`;
@@ -40,7 +39,6 @@ export function minLengthValidationMessage(error: any, field: FormlyFieldConfig)
     BrowserModule,
     ReactiveFormsModule,
     FormlyBootstrapModule,
-    MatTableModule,
     FormlyModule.forRoot({
       validationMessages: [
         { name: 'required', message: 'This field is required' },
