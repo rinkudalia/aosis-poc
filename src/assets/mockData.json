@@ -1,10 +1,11 @@
 {
     "data": [
         {
+            "entityName": "site",
             "label": "First Name",
             "controlType": "varchar",
             "attribute": "fname",
-            "value": "John",
+            "value": "John",    
             "tooltip": "Dynamic Form First Name",
             "validation": {
                 "required": true,
@@ -12,6 +13,7 @@
             }
         },
         {
+            "entityName": "site",
             "label": "Last Name",
             "controlType": "varchar",
             "attribute": "lname",
@@ -23,6 +25,7 @@
             }
         },
         {
+            "entityName": "site",
             "label": "Email",
             "controlType": "varchar",
             "attribute": "email",
@@ -33,6 +36,7 @@
             }
         },
         {
+            "entityName": "site",
             "label": "Weight",
             "controlType": "double",
             "attribute": "weight",
@@ -43,6 +47,7 @@
             }
         },
         {
+            "entityName": "site",
             "label": "Height",
             "controlType": "double",
             "attribute": "height",
@@ -53,6 +58,7 @@
             }
         },
         {
+            "entityName": "site",
             "label": "Gender",
             "controlType": "varchar",
             "attribute": "gender",
@@ -63,6 +69,7 @@
             }
         },
         {
+            "entityName": "site",
             "label": "Date",
             "controlType": "date",
             "attribute": "date",
