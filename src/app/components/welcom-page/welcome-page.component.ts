@@ -1,5 +1,6 @@
 import { Token } from '@angular/compiler';
 import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { AosisMappingService } from '@app/services/aosis-mapping.service';
 import { TokenDto } from '@app/types/token-dto';
 import { take } from 'rxjs/operators';
@@ -16,7 +17,7 @@ export class WelcomePageComponent implements OnInit {
       ssl: false,
       token: ''
   };
-  constructor(private aosisMappingService: AosisMappingService) { }
+  constructor(private aosisMappingService: AosisMappingService, private router: Router) { }
 
   ngOnInit(): void {
     this.getWelcomeData();
@@ -57,18 +58,6 @@ export class WelcomePageComponent implements OnInit {
   }
 
   getQueryAllWell() {
-    this.aosisMappingService.getQueryAllWell()
-    .pipe((take(1)))
-      .subscribe({
-        next: (response: any) =>{
-            console.log(response);
-            return response;
-        },
-        error: (e: any) => {
-          console.error('Error reading the json file.', e);
-          return e;
-        },
-        complete: () => console.info('complete') 
-      });
+    this.router.navigateByUrl('/displaydata');
   }
 }

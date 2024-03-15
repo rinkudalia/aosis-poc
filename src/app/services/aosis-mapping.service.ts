@@ -57,16 +57,4 @@ export class AosisMappingService {
      }));
   }
 
-  public getQueryAllWell() {
-    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
-
-    return this.httpClient.get('/oasis/poc1/getQueryAllWells',  { headers, responseType: 'json'})
-    .pipe(
-     map((data: any) => {
-       return data;
-     }),
-     catchError((error: HttpErrorResponse) => {
-       return throwError(() => error);
-     }));
-  }
 }

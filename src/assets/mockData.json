@@ -2,9 +2,10 @@
     "data": [
         {
             "label": "First Name",
-            "type": "varchar",
-            "key": "fname",
+            "controlType": "varchar",
+            "attribute": "fname",
             "value": "John",
+            "tooltip": "Dynamic Form First Name",
             "validation": {
                 "required": true,
                 "minLength": 2
@@ -12,9 +13,10 @@
         },
         {
             "label": "Last Name",
-            "type": "varchar",
-            "key": "lname",
+            "controlType": "varchar",
+            "attribute": "lname",
             "value": "Doss",
+            "tooltip": "Dynamic Form Last Name",
             "validation": {
                 "required": true,
                 "minLength": 2
@@ -22,35 +24,39 @@
         },
         {
             "label": "Email",
-            "type": "varchar",
-            "key": "email",
+            "controlType": "varchar",
+            "attribute": "email",
             "value": "John.Doss@abc.com",
+            "tooltip": "Dynamic Form Email",
             "validation": {
                 "required": true
             }
         },
         {
             "label": "Weight",
-            "type": "double",
-            "key": "weight",
+            "controlType": "double",
+            "attribute": "weight",
             "value": "35",
+            "tooltip": "Dynamic Form Weight",
             "validation": {
                 "required": false
             }
         },
         {
             "label": "Height",
-            "type": "double",
-            "key": "height",
+            "controlType": "double",
+            "attribute": "height",
             "value": "120",
+            "tooltip": "Dynamic Form Height",
             "validation": {
                 "required": true
             }
         },
         {
             "label": "Gender",
-            "type": "varchar",
-            "key": "gender",
+            "controlType": "varchar",
+            "attribute": "gender",
+            "tooltip": "Dynamic Form Gender",
             "value": "F",
             "validation": {
                 "required": true
@@ -58,8 +64,9 @@
         },
         {
             "label": "Date",
-            "type": "date",
-            "key": "date",
+            "controlType": "date",
+            "attribute": "date",
+            "tooltip": "Dynamic Form Date",
             "value": "2024-03-04",
             "validation": {
                 "required": true

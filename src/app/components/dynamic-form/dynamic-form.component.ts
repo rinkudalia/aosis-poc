@@ -3,9 +3,7 @@ import {FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { take } from 'rxjs';
 import { AosisMappingService } from '@app/services/aosis-mapping.service';
-import {DisplayDataGridComponent} from '@app/components/display-data-grid/display-data.component';
-import { Route, Router } from '@angular/router';
-import { AosisDataMappingService } from '@app/services/aosis-data-mapping.service';
+import { Router } from '@angular/router';
 @Component({  
   selector: 'dynamic-form',
   templateUrl: `./dynamic-form.component.html`,
@@ -18,11 +16,10 @@ export class DynamicFormComponent implements OnInit {
   mockData: any;
   emailPattern = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}';
 
-  constructor(private aosisMappingService: AosisMappingService, private router: Router, private aosisDataMappingService: AosisDataMappingService) { }
+  constructor(private aosisMappingService: AosisMappingService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadMockData();
-    this.loadJsonData();
   }
 
   loadMockData() {
@@ -54,37 +51,44 @@ export class DynamicFormComponent implements OnInit {
         },
       };
 
-      row['key'] =  row['key']?.toString().trim();
-      row['type'] = row['type']?.toString().trim();
+      row['attribute'] =  row['attribute']?.toString().trim();
+      row['controlType'] = row['controlType']?.toString().trim();
       row['value'] = row['value']?.toString().trim(); 
-      
+
       // setting key
-      fieldConfig.key = row['key'];
+      fieldConfig.key = row['attribute'];
       // setting default value
       fieldConfig.defaultValue = row['value'];
-
-      const rowType = row['type'];
+      
+      const rowType = row['controlType'];
 
       switch (rowType) {
         case 'varchar':
-          fieldConfig.type = row['key'] === 'gender' ? 'radio' : 'input';
-          fieldConfig.key = row['key'];
+          fieldConfig.type = row['attribute'] === 'gender' ? 'radio' : 'input';
+          fieldConfig.key = row['attribute'];
+          
           /**
            * TODO: we need to check separate data type for radio button group, right now it is as varchar
            * so we need to add check for gender specifically
            */
-          if(row['key'] === 'gender') {
+          if(row['attribute'] === 'gender') {
             fieldConfig.props =   {
               name: 'Gener',
               label: 'Gender',
-              type: 'radio',  
+              type: 'radio',
+              tooltip: {
+                content: row['tooltip']
+              },  
               options: [{ value: 'Male', key: 'M' }, { value: 'Female', key: 'F' }],
               required: row['validation']?.required
             };
-          } else  if(row['key'] === 'email') {
+          } else  if(row['attribute'] === 'email') {
             fieldConfig.props =   {
               label: row['label'],
               type: 'email',  
+              tooltip: {
+                content: row['tooltip']
+              },
               required: row['validation']?.required,
               pattern: this.emailPattern
             };
@@ -97,6 +101,9 @@ export class DynamicFormComponent implements OnInit {
             fieldConfig.props = {
               label: row['label'],
               type: 'input',  
+              tooltip: {
+                content: row['tooltip']
+              },
               required: row['validation']?.required,
               minLength: row['validation']?.minLength
             };
@@ -112,6 +119,9 @@ export class DynamicFormComponent implements OnInit {
             type: 'date',
             placeholder: 'yyyy-mm-dd',
             format:'yyyy-mm-dd',
+            tooltip: {
+                content: row['tooltip']
+              },
             required: row['validation']?.required,
             datepickerOptions: {
              // min: new Date()
@@ -123,6 +133,9 @@ export class DynamicFormComponent implements OnInit {
           fieldConfig.props = {
             label: row['label'],
             type: 'number',
+            tooltip: {
+                content: row['tooltip']
+              },
             required: row['validation']?.required
           };
           break;
@@ -138,14 +151,16 @@ export class DynamicFormComponent implements OnInit {
     if(this.form.invalid) return;
     console.log(this.model);
     if(this.mockData) {
-      this.mockData.map((row: any) => {
+      const outputData = this.mockData.map((row: any) => {
         if(this.model[row.key]) {
           row.value = this.model[row.key];
         }
+        row.timestamp = new Date();
+        delete row['validation'];
         return row;
       });
       var a = document.createElement('a');
-      a.setAttribute('href', 'data:json;charset=utf-u,'+encodeURIComponent(JSON.stringify(this.mockData)));
+      a.setAttribute('href', 'data:json;charset=utf-u,'+encodeURIComponent(JSON.stringify(outputData)));
       a.setAttribute('download', 'output.json');
       a.click();
     }
@@ -155,31 +170,8 @@ export class DynamicFormComponent implements OnInit {
     this.form.reset();
     this.model = {};
   }
-
-  showData(){
-    this.router.navigate(['/displaydata']);
-  }
-
   callApi(){
     this.router.navigate(['/welcome']);
   }
 
-  jsonData: any;
-
-  loadJsonData() {
-    this.aosisDataMappingService.getMockData()
-    .pipe((take(1)))
-      .subscribe({
-        next: (response: any) =>{
-            this.jsonData = response.data;
-            console.log(this.jsonData);
-            return this.jsonData;
-        },
-        error: (e) => {
-          console.error('Error reading the json file.', e);
-          return e;
-        },
-        complete: () => console.info('complete') 
-      });
-  }
 }

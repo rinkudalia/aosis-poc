@@ -5,7 +5,7 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
  selector: 'formly-field-radio',
  template: `
  <div *ngIf="fieldOptions" class="col-sm-2 form-element form-group">
- <label class="label" [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
+ <label class="label" [title]="tooltip" [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
  <div class="field-options"> 
     <div *ngFor="let option of fieldOptions" class="option">
         <input type="radio" class="border border-primary"
@@ -14,6 +14,7 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
               [formlyAttributes]="field"
               [value]="option.key"
               [checked]="field.defaultValue"
+              [title]="tooltip"
               [id]="option.key">
         <span class="radio-label">{{ option.value }}</span>
       </div>
@@ -54,6 +55,10 @@ export class FormlyFieldRadio extends FieldType<FieldTypeConfig> implements OnIn
       super();
       
   }
+
+  get tooltip(): string {
+    return this.field.props['tooltip']?.content ?? this.label;
+ }
 
   get isRequired() {
       return this.field.props ? this.field.props.required : false;
