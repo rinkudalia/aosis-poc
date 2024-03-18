@@ -1,0 +1,22 @@
+:host {
+  overflow: hidden;
+  .display-data {
+    margin: 15px;
+    overflow: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto;
+  }
+  
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+}

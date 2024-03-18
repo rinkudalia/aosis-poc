@@ -1,0 +1,24 @@
+<div class="display-data" [ngStyle]="{'height': getTableHeight + 'px'}">
+    <table class="table table-striped">
+      <thead class="sticky-top">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Alias</th>
+          <th>SQL Type</th>
+          <th>Domain</th>
+          <th>Default Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let well of wells">
+          <td>{{ well.name }}</td>
+          <td>{{ well.type }}</td>
+          <td>{{ well.alias }}</td>
+          <td>{{ well.sqlType }}</td>
+          <td>{{ well.domain }}</td>
+          <td>{{ well.defaultvalue }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
