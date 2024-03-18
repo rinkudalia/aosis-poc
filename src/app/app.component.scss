@@ -8,6 +8,10 @@
     flex-direction: column;
     ::ng-deep .form-label {
       display: none;
+      span {
+        display: none;
+      }
+      font-weight: bolder;
     }
     nav {
       color: white;
