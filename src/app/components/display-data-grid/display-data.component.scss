@@ -1,6 +1,13 @@
-table {
+:host {
+  overflow: hidden;
+  .display-data {
+    margin: 15px;
+    overflow: auto;
+  }
+  table {
     width: 100%;
     border-collapse: collapse;
+    overflow: auto;
   }
   
   th, td {
@@ -12,4 +19,4 @@ table {
   th {
     background-color: #f2f2f2;
   }
-  
+}

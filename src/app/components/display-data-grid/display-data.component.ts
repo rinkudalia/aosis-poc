@@ -19,7 +19,9 @@ interface Well {
   styleUrls: ['./display-data.component.scss']
 })
 export class DisplayDataGridComponent implements OnInit {
-  
+  get getTableHeight() {
+    return window.innerHeight - 100;
+  }
   wells: Array<any>= [];
   well1: any[] = [];
 
