@@ -4,28 +4,35 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 @Component({
  selector: 'formly-field-radio',
  template: `
- <div *ngIf="fieldOptions" class="col-sm-2 form-element form-group">
- <label class="label" [title]="tooltip" [for]="field.key">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span></label>
- <div class="field-options"> 
+ <div class="col-sm-2 form-element form-group">
+   <legend class="label" [title]="tooltip">{{label}} <span class="label-required" *ngIf="isRequired">(required)</span>
+   <div class="field-options"> 
     <div *ngFor="let option of fieldOptions" class="option">
-        <input type="radio" class="border border-primary"
-              [name]="option.label"
-              [formControl]="formControl" 
-              [formlyAttributes]="field"
-              [value]="option.key"
-              [checked]="field.defaultValue"
-              [title]="tooltip"
-              [id]="option.key">
-        <span class="radio-label">{{ option.value }}</span>
+           <input type="radio" 
+           [title]="tooltip"
+           [formControl]="formControl" 
+           [formlyAttributes]="field"
+           [value]="option.key">
+        {{ option.value }}
       </div>
   </div>
- </div>
+  </legend>
+ </div> 
  `,
   styles: `
+   legend {
+    font-size: 16px;
+   }
+
     .field-options {
       display: flex;
       .option {
         margin-right: 15px;
+        display: flex;
+        font-weight: normal;
+        input {
+          margin-right: 5px;
+        }
       }
     }
 
@@ -40,7 +47,8 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
     }
     .label {
         font-weight: bolder;
-        margin-bottom: 5px;
+        margin-bottom: 7px;
+        font-size: 16px;
     }
 
     .label-required {

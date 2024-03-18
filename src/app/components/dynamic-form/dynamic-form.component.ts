@@ -58,7 +58,7 @@ export class DynamicFormComponent implements OnInit {
       fieldConfig.key = row['attribute'];
       // setting default value
       fieldConfig.defaultValue = row['value'];
-      
+      fieldConfig.id = row['attribute'];
       const rowType = row['controlType'];
 
       switch (rowType) {
@@ -72,8 +72,8 @@ export class DynamicFormComponent implements OnInit {
            */
           if(row['attribute'] === 'gender') {
             fieldConfig.props =   {
-              name: 'Gener',
-              label: 'Gender',
+              name: row['attribute'],
+              label: row['label'],
               type: 'radio',
               tooltip: {
                 content: row['tooltip']
@@ -84,7 +84,7 @@ export class DynamicFormComponent implements OnInit {
           } else  if(row['attribute'] === 'email') {
             fieldConfig.props =   {
               label: row['label'],
-              type: 'email',  
+              type: 'input',  
               tooltip: {
                 content: row['tooltip']
               },
@@ -151,8 +151,8 @@ export class DynamicFormComponent implements OnInit {
     console.log(this.model);
     if(this.mockData) {
       const outputData = this.mockData.map((row: any) => {
-        if(this.model[row.key]) {
-          row.value = this.model[row.key];
+        if(this.model[row.attribute]) {
+          row.value = this.model[row.attribute];
         }
         row.timestamp = new Date();
         delete row['tooltip'];
