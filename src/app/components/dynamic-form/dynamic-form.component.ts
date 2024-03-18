@@ -3,7 +3,6 @@ import {FormGroup, Validators} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { take } from 'rxjs';
 import { AosisMappingService } from '@app/services/aosis-mapping.service';
-import { Router } from '@angular/router';
 @Component({  
   selector: 'dynamic-form',
   templateUrl: `./dynamic-form.component.html`,
@@ -16,7 +15,7 @@ export class DynamicFormComponent implements OnInit {
   mockData: any;
   emailPattern = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}';
 
-  constructor(private aosisMappingService: AosisMappingService, private router: Router) { }
+  constructor(private aosisMappingService: AosisMappingService) { }
 
   ngOnInit(): void {
     this.loadMockData();
@@ -148,11 +147,11 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
-  
-    if (this.mockData) {
+    if(this.form.invalid) return;
+    console.log(this.model);
+    if(this.mockData) {
       const outputData = this.mockData.map((row: any) => {
-        if (this.model.hasOwnProperty(row.attribute)) {
+        if(this.model[row.attribute]) {
           row.value = this.model[row.attribute];
         }
         row.timestamp = new Date();
@@ -160,19 +159,12 @@ export class DynamicFormComponent implements OnInit {
         delete row['validation'];
         return row;
       });
-  
-      const jsonData = JSON.stringify(outputData, null, 2);
-  
-      const a = document.createElement('a');
-      a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonData);
-      a.download = 'output.json';
-      document.body.appendChild(a);
+      var a = document.createElement('a');
+      a.setAttribute('href', 'data:json;charset=utf-u,'+encodeURIComponent(JSON.stringify(outputData)));
+      a.setAttribute('download', 'output.json');
       a.click();
-      document.body.removeChild(a);
     }
   }
-  
-  
 
   onCancel() {
     this.form.reset();
