@@ -150,7 +150,6 @@ export class DynamicFormComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid) return;
   
-    // Update mockData with form values
     if (this.mockData) {
       const outputData = this.mockData.map((row: any) => {
         if (this.model.hasOwnProperty(row.attribute)) {
@@ -164,18 +163,15 @@ export class DynamicFormComponent implements OnInit {
   
       const jsonData = JSON.stringify(outputData, null, 2);
   
-      const blob = new Blob([jsonData], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-  
       const a = document.createElement('a');
-      a.href = url;
+      a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonData);
       a.download = 'output.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      URL.revokeObjectURL(url);
     }
   }
+  
   
 
   onCancel() {
