@@ -178,8 +178,4 @@ export class DynamicFormComponent implements OnInit {
     this.form.reset();
     this.model = {};
   }
-  callApi(){
-    this.router.navigate(['/welcome']);
-  }
-
 }
