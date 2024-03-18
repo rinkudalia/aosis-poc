@@ -68,5 +68,5 @@ export class AosisMappingService {
      catchError((error: HttpErrorResponse) => {
        return throwError(() => error);
      }));
-}
+  }
 }
