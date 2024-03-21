@@ -68,5 +68,5 @@ jobs:
           app-name: 'Oasis-Poc2-Linux-DyanamicUI'
           slot-name: 'Production'
           publish-profile: ${{secrets.PUBLISH_PROFILE}}
-          package: .
+          package: ./dist/oasis-dynamic-forms-poc/browser
           
