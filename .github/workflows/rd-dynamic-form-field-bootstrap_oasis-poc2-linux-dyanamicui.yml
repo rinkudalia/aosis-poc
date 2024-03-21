@@ -59,6 +59,7 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_69AE51C1F0024604A1BD124D37826B18 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_45025ABD96034B83915A5F4AB3928807 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_16F7C9ECFD9D4A6CA10B0F0E2B024DAF }}
+          
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -66,6 +67,6 @@ jobs:
         with:
           app-name: 'Oasis-Poc2-Linux-DyanamicUI'
           slot-name: 'Production'
-          publish-profile: AZURE_CREDENTIALS
+          publish-profile: ${{secrets.PUBLISH_PROFILE}}
           package: ./dist/Oasis-Poc2-Linux-DyanamicUI/browser
           
