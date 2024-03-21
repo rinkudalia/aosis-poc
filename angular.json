@@ -36,7 +36,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/app",
-              "src/web.config"
+              "src/web.config",
+              "src/proxy.conf.json"
             ],
             "styles": [
               "src/styles.scss"
@@ -48,8 +49,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -110,5 +111,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
