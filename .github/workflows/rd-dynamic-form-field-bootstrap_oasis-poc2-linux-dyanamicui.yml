@@ -67,5 +67,5 @@ jobs:
           app-name: 'Oasis-Poc2-Linux-DyanamicUI'
           slot-name: 'Production'
           publish-profile: $
-          package: .
+          package: ./dist/Oasis-Poc2-Linux-DyanamicUI/browser
           
