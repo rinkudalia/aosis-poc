@@ -1,5 +1,5 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 import { FormlyFieldConfig} from '@ngx-formly/core';
 import { take } from 'rxjs';
 import { AosisMappingService } from '@app/services/aosis-mapping.service';
