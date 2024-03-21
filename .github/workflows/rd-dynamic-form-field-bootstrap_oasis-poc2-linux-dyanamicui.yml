@@ -66,6 +66,6 @@ jobs:
         with:
           app-name: 'Oasis-Poc2-Linux-DyanamicUI'
           slot-name: 'Production'
-          publish-profile: $
+          publish-profile: AZURE_CREDENTIALS
           package: ./dist/Oasis-Poc2-Linux-DyanamicUI/browser
           
