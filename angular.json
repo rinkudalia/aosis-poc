@@ -58,26 +58,36 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/envrionments/envrionment.ts",
+                  "with": "src/envrionments/envrionment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/envrionments/envrionment.ts",
+                  "with": "src/envrionments/environment.dev.ts"
+                }
+              ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "oasis-dynamic-forms-poc:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "buildTarget": "oasis-dynamic-forms-poc:build:production"
             },
             "development": {
-              "buildTarget": "oasis-dynamic-forms-poc:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "buildTarget": "oasis-dynamic-forms-poc:build:development"
             }
           },
           "defaultConfiguration": "development"
