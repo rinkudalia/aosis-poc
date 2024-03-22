@@ -37,7 +37,8 @@
               "src/assets",
               "src/app",
               "src/web.config",
-              "src/proxy.conf.json"
+              "src/proxy.conf.json",
+              "src/environments"
             ],
             "styles": [
               "src/styles.scss"
@@ -62,7 +63,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/envrionments/envrionment.ts",
-                  "with": "src/envrionments/envrionment.prod.ts"
+                  "with": "src/envrionments/environment.prod.ts"
                 }
               ]
             },
