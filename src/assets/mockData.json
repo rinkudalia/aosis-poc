@@ -2,6 +2,18 @@
     "data": [
         {
             "entityName": "site",
+            "label": "First Name",
+            "controlType": "varchar",
+            "attribute": "fname",
+            "value": "John",    
+            "tooltip": "Dynamic Form First Name",
+            "validation": {
+                "required": true,
+                "minLength": 2
+            }
+        },
+        {
+            "entityName": "site",
             "label": "Last Name",
             "controlType": "varchar",
             "attribute": "lname",
